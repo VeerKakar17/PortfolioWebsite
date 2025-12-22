@@ -275,14 +275,15 @@ const projects = [
     id: 1,
     title: "Transforma Tech Generators for ACE",
     description: "Designed and developed a full-stack application end-to-end that automatically generates IBM App Connect Enterprise (ACE) integration projects from input JSON, XML, or DFDL schemas. The system maps inputs to configurable templates to produce ESQL code, message flows, and messaging infrastructure, including MQ queues and Kafka topics. Built using Spring Boot for the backend and React for the frontend.",
-    images: ["https://via.placeholder.com/400x200/1a1a2e/f6b17a?text=ACE+Generator"],
+    images: ["/PortfolioWebsite/TTGenerators1.png", "/PortfolioWebsite/TTGenerators2.png", "/PortfolioWebsite/TTGenerators3.png"],
     techStack: ["Java", "Spring Boot", "Messaging Systems", "Apache Kafka", "System Design", "RESTful API Design", "Code Generation"],
+    liveUrl: "http://www.transformatech.com/products/transformatech-accelerators-for-ibm-ace/"
   },
   {
     id: 2,
     title: "Mini-Minecraft",
     description: "Developed a high-performance Minecraft recreation in C++ using OpenGL, with a focus on real-time rendering and systems-level optimization. Implemented multithreaded terrain generation and face-culling to minimize rendering overhead, and designed a custom redstone logic system from scratch. Repository is private, but code is available upon request. Demo video can be seen with the link below.",
-    images: ["https://via.placeholder.com/400x200/1a1a2e/f6b17a?text=Mini+Minecraft+1", "https://via.placeholder.com/400x200/1a1a2e/f6b17a?text=Mini+Minecraft+2", "https://via.placeholder.com/400x200/1a1a2e/f6b17a?text=Mini+Minecraft+3"],
+    images: ["/PortfolioWebsite/MiniMinecraftBlock.png", "/PortfolioWebsite/MiniMinecraftInventory.png", "/PortfolioWebsite/MiniMinecraftRedstone.png"],
     techStack: ["C++", "Graphics (OpenGL)", "Multithreading & Concurrency", "Performance Optimization", "Systems Programming"],
     liveUrl: "https://www.youtube.com/playlist?list=PLS0hPwkzcr9sHUFkR2NTA9FKZixdtvJLW",
   },

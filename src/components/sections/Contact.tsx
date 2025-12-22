@@ -240,17 +240,6 @@ const Contact = () => {
                 <FaLinkedin aria-hidden="true" />
                 <span className="sr-only">LinkedIn</span>
               </SocialLink>
-              <SocialLink 
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ y: -5 }}
-                role="listitem"
-                aria-label="Follow me on Twitter"
-              >
-                <FaTwitter aria-hidden="true" />
-                <span className="sr-only">Twitter</span>
-              </SocialLink>
             </SocialLinks>
           </ContactContent>
         </motion.div>
