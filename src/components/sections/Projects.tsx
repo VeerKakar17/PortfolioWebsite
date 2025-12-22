@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { theme } from '../../styles/theme';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { useState } from 'react';
 
 const ProjectsSection = styled.section`
   min-height: 100vh;
@@ -178,22 +179,35 @@ const ProjectLinks = styled.div`
 const projects = [
   {
     id: 1,
-    title: "Project One",
-    description: "A full-stack web application with real-time features and modern UI/UX design.",
-    image: "https://via.placeholder.com/400x200",
-    techStack: ["React", "Node.js", "MongoDB", "Socket.IO"],
-    githubUrl: "https://github.com",
-    liveUrl: "https://example.com",
+    title: "Transforma Tech Generators for ACE",
+    description: "A full-stack web-application to automatically generate IBM App Connect Enterprise (ACE) programs, including ESQL code and custom message flows. Integrates with IBM MQ and Apache Kafka. (Due to this being an internal tool, the code repository cannot be shared).",
+    image: ["https://via.placeholder.com/400x200"],
+    techStack: ["Java (Backend)", "React", "IBM App Connect Enterprise (ACE)", "Git"],
   },
   {
     id: 2,
-    title: "Project Two",
-    description: "Mobile-first e-commerce platform with seamless payment integration.",
-    image: "https://via.placeholder.com/400x200",
-    techStack: ["Next.js", "TypeScript", "Stripe", "Tailwind"],
-    githubUrl: "https://github.com",
-    liveUrl: "https://example.com",
+    title: "Mini-Minecraft",
+    description: "Recreation of Minecraft from scratch with graphics libraries and C++. Focused on optimizing performance with mulitithreaded terrain generation and culling unseen faces. Recreated redstone logic from scratch. (This project is in a private repository, so feel free to reach out if you would like to see the code).",
+    image: ["https://via.placeholder.com/400x200"],
+    techStack: ["C++", "OpenGL", "Qt Creator", "Git", "Multithreading", "Performance Optimization"],
+    liveUrl: "https://youtu.be/h5Gsn6jnbwY?si=l_aDcVCX3fMeR2K2",
   },
+  {
+    id: 3,
+    title: "Catanks",
+    description: "3-D Wii Tanks inspired game currenlty published on Steam and Itch.io. Created as a team of 30+ developers with Unity.",
+    image: ["https://via.placeholder.com/400x200"],
+    techStack: ["Unity", "Git", "Performance Optimization"],
+    githubUrl: "https://github.com/pennupgrade/catanks",
+    liveUrl: "https://store.steampowered.com/app/3793790/Catanks",
+  },
+  {
+    id: 4,
+    title: "4500 Project",
+    description: "Full-stack web application to aggregate game data from 4 100,000+ entry datasets for easy searching. Created a relational database schema in PostgreSQL which was hosted using AWS. This website is no longer maintained and has a private repository, so feel free to reach out if you would like to see the code.",
+    image: ["https://via.placeholder.com/400x200"],
+    techStack: ["PostgreSQL", "AWS", "React", "Node.js", "SQL", "Query Optimization", "Relational Database Design", "Python (Pre-Processing)"],
+  }
 ];
 
 const Projects = () => {
@@ -217,6 +231,8 @@ const Projects = () => {
       },
     },
   };
+
+  const [selectedImage, setSelectedImage] = useState([0, 0, 0, 0]);
 
   return (
     <ProjectsSection id="projects" role="region" aria-label="Featured Projects">
@@ -246,7 +262,7 @@ const Projects = () => {
               aria-labelledby={`project-title-${project.id}`}
             >
               <ProjectImage 
-                imageUrl={project.image} 
+                imageUrls={project.image[selectedImage[project.id-1]]} 
                 role="img" 
                 aria-label={`Screenshot of ${project.title}`} 
               />
@@ -259,7 +275,7 @@ const Projects = () => {
                   ))}
                 </TechStack>
                 <ProjectLinks>
-                  <a 
+		{project.githubUrl && <a 
                     href={project.githubUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
@@ -267,8 +283,8 @@ const Projects = () => {
                   >
                     <FaGithub aria-hidden="true" />
                     <span className="sr-only">GitHub repository</span>
-                  </a>
-                  <a 
+                  </a>}
+		  {project.liveUrl && <a 
                     href={project.liveUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
@@ -276,7 +292,7 @@ const Projects = () => {
                   >
                     <FaExternalLinkAlt aria-hidden="true" />
                     <span className="sr-only">Live site</span>
-                  </a>
+                  </a>}
                 </ProjectLinks>
               </ProjectContent>
             </ProjectCard>

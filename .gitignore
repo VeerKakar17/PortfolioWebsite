@@ -1,0 +1,42 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Production build
+/dist
+/build
+
+# Vite-specific
+.vite/
+# comment out below line to ignore the default vite output path (within node_modules)
+# as an optimization, but generally not needed as node_modules is ignored.
+# .vite/deps 
+
+# Local environment variables
+# add *.local to your .gitignore to avoid them being checked into git
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+pnpm-error.log*
+
+# OS and IDE-related files
+.DS_Store
+.idea
+.vscode
+*.suo
+*.user
+*.cas
+*.sdf
+*.vssscc
+*.spfcache
+*.vsco
+

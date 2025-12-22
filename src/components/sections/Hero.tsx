@@ -127,10 +127,10 @@ export const Hero = () => {
         <HeroContent>
           <div>
             <Title role="heading" aria-level={2}>
-              Hi, I'm [Your Name]
+              Hi, I'm Veer Kakar
             </Title>
             <Subtitle role="heading" aria-level={3}>
-              Full Stack Developer
+              Software Developer
             </Subtitle>
             <Description role="paragraph">
               I create elegant solutions to complex problems, specializing in modern web development
@@ -138,7 +138,7 @@ export const Hero = () => {
             </Description>
             <SocialLinks role="list" aria-label="Social media links">
               <a 
-                href="https://github.com" 
+                href="https://github.com/VeerKakar17" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 aria-label="Visit my GitHub profile"
@@ -150,7 +150,7 @@ export const Hero = () => {
                 <span className="sr-only">GitHub</span>
               </a>
               <a 
-                href="https://linkedin.com" 
+                href="https://linkedin.com/in/veerkakar" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 aria-label="Visit my LinkedIn profile"
@@ -162,7 +162,7 @@ export const Hero = () => {
                 <span className="sr-only">LinkedIn</span>
               </a>
               <a 
-                href="mailto:your.email@example.com"
+                href="mailto:veerkakar1@gmail.com"
                 aria-label="Send me an email"
                 role="listitem"
               >
