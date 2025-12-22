@@ -241,7 +241,7 @@ const TechTag = styled.span`
   }
 
   &:hover {
-    background: ${theme.colors.gradient.light};
+    background: ${theme.colors.gradient.accent};
     color: ${theme.colors.textLight};
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(204, 35, 236, 0.2);
@@ -391,7 +391,6 @@ const Projects = () => {
                     imageUrl={project.images[currentImageIndex]} 
                     role="img" 
                     aria-label={`Screenshot of ${project.title}`} 
-		    alt="image"
                   />
                   {hasMultipleImages && (
                     <>
