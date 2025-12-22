@@ -67,7 +67,7 @@ const ProjectCard = styled(motion.div)`
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(246, 177, 122, 0.15);
+    box-shadow: 0 8px 30px rgba(204, 35, 236, 0.2);
   }
 `;
 
@@ -130,7 +130,7 @@ const ImageNavButton = styled.button`
     color: ${theme.colors.textDark};
     border-color: ${theme.colors.accent};
     transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 4px 12px rgba(246, 177, 122, 0.3);
+    box-shadow: 0 4px 12px rgba(204, 35, 236, 0.2); 
   }
 
   &:active {
@@ -229,7 +229,7 @@ const TechStack = styled.div`
 
 const TechTag = styled.span`
   background: ${theme.colors.glass.card};
-  color: ${theme.colors.accent};
+  color: ${theme.colors.light};
   padding: 4px 10px;
   border-radius: 20px;
   font-size: clamp(0.75rem, 2vw, 0.85rem);
@@ -241,10 +241,10 @@ const TechTag = styled.span`
   }
 
   &:hover {
-    background: ${theme.colors.gradient.accent};
-    color: ${theme.colors.textDark};
+    background: ${theme.colors.gradient.light};
+    color: ${theme.colors.textLight};
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(246, 177, 122, 0.2);
+    box-shadow: 0 4px 12px rgba(204, 35, 236, 0.2);
   }
 `;
 
@@ -274,7 +274,7 @@ const projects = [
   {
     id: 1,
     title: "Transforma Tech Generators for ACE",
-    description: "Designed and developed end-to-end a full-stack application that automatically generates IBM App Connect Enterprise (ACE) integration projects from input JSON, XML, or DFDL schemas. The system maps inputs to configurable templates to produce ESQL code, message flows, and messaging infrastructure, including MQ queues and Kafka topics. Built using Spring Boot for the backend and React for the frontend. Due to this being an internal tool, the repository is private and cannot be shared.",
+    description: "Designed and developed a full-stack application end-to-end that automatically generates IBM App Connect Enterprise (ACE) integration projects from input JSON, XML, or DFDL schemas. The system maps inputs to configurable templates to produce ESQL code, message flows, and messaging infrastructure, including MQ queues and Kafka topics. Built using Spring Boot for the backend and React for the frontend.",
     images: ["https://via.placeholder.com/400x200/1a1a2e/f6b17a?text=ACE+Generator"],
     techStack: ["Java", "Spring Boot", "Messaging Systems", "Apache Kafka", "System Design", "RESTful API Design", "Code Generation"],
   },
@@ -289,8 +289,8 @@ const projects = [
   {
     id: 3,
     title: "Game Mash",
-    description: "Built a full-stack web application in a small team to aggregate and query large-scale game datasets (4 datasets with 100,000+ entries each). Designed and normalized a relational database schema, implemented data preprocessing pipelines, and deployed a PostgreSQL backend on AWS for efficient querying and search. Repository is private, but code is available on request.",
-    images: ["https://via.placeholder.com/400x200/1a1a2e/f6b17a?text=4500+Project"],
+    description: "Built a full-stack web application to aggregate and query large-scale game datasets (4 datasets with 100,000+ entries each). Designed and normalized a relational database schema, implemented data preprocessing pipelines, and deployed a PostgreSQL backend on AWS for efficient querying and search. Repository is private, but code is available on request.",
+    images: ["/PortfolioWebsite/GameMashSearchScreen.png", "/PortfolioWebsite/GameMashGenreScreen.png", "/PortfolioWebsite/GameMashInfoScreen.png"],
     techStack: ["Relational Databse Systems", "AWS", "PostgreSQL", "Full-Stack Development", "Data Processing", "System Design"],
   },
   {
@@ -390,6 +390,7 @@ const Projects = () => {
                     imageUrl={project.images[currentImageIndex]} 
                     role="img" 
                     aria-label={`Screenshot of ${project.title}`} 
+		    alt="image"
                   />
                   {hasMultipleImages && (
                     <>

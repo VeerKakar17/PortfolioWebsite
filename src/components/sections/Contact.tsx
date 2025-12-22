@@ -61,7 +61,7 @@ const ContactContent = styled.div`
   backdrop-filter: blur(8px);
   padding: ${theme.spacing.lg};
   border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(246, 177, 122, 0.15);
+  box-shadow: 0 8px 32px rgba(204, 35, 236, 0.15);
 
   @media (min-width: ${theme.breakpoints.md}) {
     margin: ${theme.spacing.xl} auto;
@@ -86,7 +86,7 @@ const ContactEmail = styled(motion.a)`
   align-items: center;
   gap: ${theme.spacing.sm};
   font-size: clamp(0.9rem, 2vw, 1.3rem);
-  color: ${theme.colors.accent};
+  color: ${theme.colors.light};
   margin-bottom: ${theme.spacing.lg};
   padding: ${theme.spacing.sm} ${theme.spacing.lg};
   border-radius: 30px;
@@ -112,7 +112,7 @@ const ContactEmail = styled(motion.a)`
 
   &:hover {
     background: ${theme.colors.gradient.accent};
-    color: ${theme.colors.textDark};
+    color: ${theme.colors.textLight};
     transform: translateY(-3px);
     box-shadow: 0 6px 16px ${theme.colors.overlay.dark};
   }
@@ -141,7 +141,7 @@ const SocialLink = styled(motion.a)`
   justify-content: center;
   border-radius: 50%;
   background: ${theme.colors.glass.card};
-  box-shadow: 0 4px 12px rgba(246, 177, 122, 0.1);
+  box-shadow: 0 4px 12px rgba(204, 35, 236, 0.1);
 
   @media (min-width: ${theme.breakpoints.md}) {
     width: 60px;
@@ -152,7 +152,7 @@ const SocialLink = styled(motion.a)`
   &:hover {
     color: ${theme.colors.light};
     transform: translateY(-3px) rotate(8deg);
-    box-shadow: 0 6px 16px rgba(246, 177, 122, 0.2);
+    box-shadow: 0 6px 16px rgba(204, 35, 236, 0.2);
     background: ${theme.colors.gradient.glass};
   }
 `;

@@ -13,7 +13,6 @@ import {
 } from 'react-icons/fa';
 import {
   SiCplusplus,
-  SiJavascript,
   SiPostgresql,
   SiOpengl
 } from 'react-icons/si';
@@ -24,6 +23,9 @@ import {
   MdSchema,
   MdSyncAlt
 } from 'react-icons/md';
+import {
+  DiDotnet
+} from 'react-icons/di';
 
 const SkillsSection = styled.section`
   min-height: 100vh;
@@ -90,7 +92,7 @@ const SkillCategory = styled(motion.div)`
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(246, 177, 122, 0.15);
+    box-shadow: 0 15px 35px rgba(204, 35, 236, 0.2); 
   }
 `;
 
@@ -149,7 +151,7 @@ const SkillItem = styled(motion.div)`
   &:hover {
     background: ${theme.colors.gradient.glass};
     transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(246, 177, 122, 0.2);
+    box-shadow: 0 4px 12px rgba(204, 35, 236, 0.2); 
 
     svg {
       transform: scale(1.1) rotate(5deg);
@@ -166,7 +168,7 @@ const skillCategories = [
       { name: 'C/C++', icon: <SiCplusplus /> },
       { name: 'Java', icon: <FaJava /> },
       { name: 'Python', icon: <FaPython /> },
-      { name: 'Javascript', icon: <SiJavascript /> },
+      { name: 'C#', icon: <DiDotnet /> },
     ],
   },
   {
@@ -233,7 +235,7 @@ const Skills = () => {
         role="heading"
         aria-level={2}
       >
-        Skills & Expertise
+       Core Skills & Expertise
       </SectionTitle>
       <motion.div
         variants={containerVariants}

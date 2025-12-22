@@ -107,7 +107,7 @@ const SocialLinks = styled.div`
       color: ${theme.colors.light};
       transform: translateY(-3px);
       background: ${theme.colors.glass.card};
-      box-shadow: 0 4px 12px rgba(246, 177, 122, 0.2);
+      box-shadow: 0 4px 12px rgba(204, 35, 236, 0.2); 
     }
   }
 
@@ -130,7 +130,7 @@ export const Hero = () => {
               Hi, I'm Veer Kakar
             </Title>
             <Subtitle role="heading" aria-level={3}>
-        	Software Developer
+        	Software Engineer
             </Subtitle>
             <Description role="paragraph">
 		 	I’m a Computer Science undergraduate pursuing an accelerated Master’s degree, with a focus on backend and systems software engineering. I enjoy building performance-critical systems, backend infrastructure, and automation tools, with experience ranging from low-level C++ systems to distributed backend platforms.
