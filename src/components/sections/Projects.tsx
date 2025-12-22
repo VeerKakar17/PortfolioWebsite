@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { theme } from '../../styles/theme';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useState } from 'react';
 
 const ProjectsSection = styled.section`
@@ -71,17 +71,25 @@ const ProjectCard = styled(motion.div)`
   }
 `;
 
-const ProjectImage = styled.div<{ imageUrl: string }>`
+const ProjectImageContainer = styled.div`
+  position: relative;
   width: 100%;
   height: 180px;
-  background-image: url(${props => props.imageUrl});
-  background-size: cover;
-  background-position: center;
-  position: relative;
 
   @media (min-width: ${theme.breakpoints.md}) {
     height: 220px;
   }
+`;
+
+const ProjectImage = styled.div<{ imageUrl: string }>`
+  width: 100%;
+  height: 100%;
+  background-image: url(${props => props.imageUrl});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  background-color: ${theme.colors.glass.card};
 
   &::after {
     content: '';
@@ -91,6 +99,92 @@ const ProjectImage = styled.div<{ imageUrl: string }>`
     width: 100%;
     height: 40%;
     background: linear-gradient(to top, ${theme.colors.glass.card}, transparent);
+  }
+`;
+
+const ImageNavButton = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: ${theme.colors.glass.background};
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(246, 177, 122, 0.2);
+  color: ${theme.colors.accent};
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all ${theme.transitions.default};
+  z-index: 10;
+  opacity: 0;
+
+  ${ProjectCard}:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    background: ${theme.colors.gradient.accent};
+    color: ${theme.colors.textDark};
+    border-color: ${theme.colors.accent};
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(246, 177, 122, 0.3);
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    
+    &:hover {
+      background: ${theme.colors.glass.background};
+      color: ${theme.colors.accent};
+      transform: translateY(-50%) scale(1);
+      box-shadow: none;
+    }
+  }
+
+  svg {
+    font-size: 16px;
+  }
+`;
+
+const PrevButton = styled(ImageNavButton)`
+  left: ${theme.spacing.sm};
+`;
+
+const NextButton = styled(ImageNavButton)`
+  right: ${theme.spacing.sm};
+`;
+
+const ImageIndicators = styled.div`
+  position: absolute;
+  bottom: ${theme.spacing.sm};
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+`;
+
+const Indicator = styled.button<{ active: boolean }>`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid ${theme.colors.accent};
+  background: ${props => props.active ? theme.colors.accent : 'transparent'};
+  cursor: pointer;
+  transition: all ${theme.transitions.default};
+  padding: 0;
+
+  &:hover {
+    background: ${theme.colors.accent};
+    transform: scale(1.2);
   }
 `;
 
@@ -180,33 +274,33 @@ const projects = [
   {
     id: 1,
     title: "Transforma Tech Generators for ACE",
-    description: "A full-stack web-application to automatically generate IBM App Connect Enterprise (ACE) programs, including ESQL code and custom message flows. Integrates with IBM MQ and Apache Kafka. (Due to this being an internal tool, the code repository cannot be shared).",
-    image: ["https://via.placeholder.com/400x200"],
-    techStack: ["Java (Backend)", "React", "IBM App Connect Enterprise (ACE)", "Git"],
+    description: "Designed and developed end-to-end a full-stack application that automatically generates IBM App Connect Enterprise (ACE) integration projects from input JSON, XML, or DFDL schemas. The system maps inputs to configurable templates to produce ESQL code, message flows, and messaging infrastructure, including MQ queues and Kafka topics. Built using Spring Boot for the backend and React for the frontend. Due to this being an internal tool, the repository is private and cannot be shared.",
+    images: ["https://via.placeholder.com/400x200/1a1a2e/f6b17a?text=ACE+Generator"],
+    techStack: ["Java", "Spring Boot", "Messaging Systems", "Apache Kafka", "System Design", "RESTful API Design", "Code Generation"],
   },
   {
     id: 2,
     title: "Mini-Minecraft",
-    description: "Recreation of Minecraft from scratch with graphics libraries and C++. Focused on optimizing performance with mulitithreaded terrain generation and culling unseen faces. Recreated redstone logic from scratch. (This project is in a private repository, so feel free to reach out if you would like to see the code).",
-    image: ["https://via.placeholder.com/400x200"],
-    techStack: ["C++", "OpenGL", "Qt Creator", "Git", "Multithreading", "Performance Optimization"],
-    liveUrl: "https://youtu.be/h5Gsn6jnbwY?si=l_aDcVCX3fMeR2K2",
+    description: "Developed a high-performance Minecraft recreation in C++ using OpenGL, with a focus on real-time rendering and systems-level optimization. Implemented multithreaded terrain generation and face-culling to minimize rendering overhead, and designed a custom redstone logic system from scratch. Repository is private, but code is available upon request. Demo video can be seen with the link below.",
+    images: ["https://via.placeholder.com/400x200/1a1a2e/f6b17a?text=Mini+Minecraft+1", "https://via.placeholder.com/400x200/1a1a2e/f6b17a?text=Mini+Minecraft+2", "https://via.placeholder.com/400x200/1a1a2e/f6b17a?text=Mini+Minecraft+3"],
+    techStack: ["C++", "Graphics (OpenGL)", "Multithreading & Concurrency", "Performance Optimization", "Systems Programming"],
+    liveUrl: "https://www.youtube.com/playlist?list=PLS0hPwkzcr9sHUFkR2NTA9FKZixdtvJLW",
   },
   {
     id: 3,
-    title: "Catanks",
-    description: "3-D Wii Tanks inspired game currenlty published on Steam and Itch.io. Created as a team of 30+ developers with Unity.",
-    image: ["https://via.placeholder.com/400x200"],
-    techStack: ["Unity", "Git", "Performance Optimization"],
-    githubUrl: "https://github.com/pennupgrade/catanks",
-    liveUrl: "https://store.steampowered.com/app/3793790/Catanks",
+    title: "Game Mash",
+    description: "Built a full-stack web application in a small team to aggregate and query large-scale game datasets (4 datasets with 100,000+ entries each). Designed and normalized a relational database schema, implemented data preprocessing pipelines, and deployed a PostgreSQL backend on AWS for efficient querying and search. Repository is private, but code is available on request.",
+    images: ["https://via.placeholder.com/400x200/1a1a2e/f6b17a?text=4500+Project"],
+    techStack: ["Relational Databse Systems", "AWS", "PostgreSQL", "Full-Stack Development", "Data Processing", "System Design"],
   },
   {
     id: 4,
-    title: "4500 Project",
-    description: "Full-stack web application to aggregate game data from 4 100,000+ entry datasets for easy searching. Created a relational database schema in PostgreSQL which was hosted using AWS. This website is no longer maintained and has a private repository, so feel free to reach out if you would like to see the code.",
-    image: ["https://via.placeholder.com/400x200"],
-    techStack: ["PostgreSQL", "AWS", "React", "Node.js", "SQL", "Query Optimization", "Relational Database Design", "Python (Pre-Processing)"],
+    title: "Catanks",
+    description: "Developed a 3D Wii Tanks–inspired game built in Unity as part of a 30+ person team, with the project published on Steam and Itch.io. Collaborated across engineering and design teams using professional game development workflows to ship a production-ready title.",
+    images: ["https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3793790/a9e03a2d727e9d9b8bffecbaa8fa8ba8360b9116/header.jpg?t=1758729503"],
+    techStack: ["Unity", "C#", "Game Development", "Large-Scale Team Collaboration", "Software Engineering Practices"],
+    githubUrl: "https://github.com/pennupgrade/catanks",
+    liveUrl: "https://store.steampowered.com/app/3793790/Catanks",
   }
 ];
 
@@ -232,7 +326,33 @@ const Projects = () => {
     },
   };
 
-  const [selectedImage, setSelectedImage] = useState([0, 0, 0, 0]);
+  const [selectedImages, setSelectedImages] = useState<{ [key: number]: number }>({
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+  });
+
+  const handlePrevImage = (projectId: number, totalImages: number) => {
+    setSelectedImages(prev => ({
+      ...prev,
+      [projectId]: prev[projectId] > 0 ? prev[projectId] - 1 : totalImages - 1,
+    }));
+  };
+
+  const handleNextImage = (projectId: number, totalImages: number) => {
+    setSelectedImages(prev => ({
+      ...prev,
+      [projectId]: prev[projectId] < totalImages - 1 ? prev[projectId] + 1 : 0,
+    }));
+  };
+
+  const handleIndicatorClick = (projectId: number, index: number) => {
+    setSelectedImages(prev => ({
+      ...prev,
+      [projectId]: index,
+    }));
+  };
 
   return (
     <ProjectsSection id="projects" role="region" aria-label="Featured Projects">
@@ -254,49 +374,82 @@ const Projects = () => {
           viewport={{ once: true }}
         >
           <ProjectGrid role="list">
-          {projects.map((project) => (
-            <ProjectCard 
-              key={project.id} 
-              variants={itemVariants}
-              role="listitem"
-              aria-labelledby={`project-title-${project.id}`}
-            >
-              <ProjectImage 
-                imageUrls={project.image[selectedImage[project.id-1]]} 
-                role="img" 
-                aria-label={`Screenshot of ${project.title}`} 
-              />
-              <ProjectContent>
-                <ProjectTitle id={`project-title-${project.id}`}>{project.title}</ProjectTitle>
-                <ProjectDescription>{project.description}</ProjectDescription>
-                <TechStack role="list" aria-label={`Technologies used in ${project.title}`}>
-                  {project.techStack.map((tech) => (
-                    <TechTag key={tech} role="listitem">{tech}</TechTag>
-                  ))}
-                </TechStack>
-                <ProjectLinks>
-		{project.githubUrl && <a 
-                    href={project.githubUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    aria-label={`View ${project.title} source code on GitHub`}
-                  >
-                    <FaGithub aria-hidden="true" />
-                    <span className="sr-only">GitHub repository</span>
-                  </a>}
-		  {project.liveUrl && <a 
-                    href={project.liveUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    aria-label={`Visit ${project.title} live site`}
-                  >
-                    <FaExternalLinkAlt aria-hidden="true" />
-                    <span className="sr-only">Live site</span>
-                  </a>}
-                </ProjectLinks>
-              </ProjectContent>
-            </ProjectCard>
-          ))}
+          {projects.map((project) => {
+            const currentImageIndex = selectedImages[project.id];
+            const hasMultipleImages = project.images.length > 1;
+            
+            return (
+              <ProjectCard 
+                key={project.id} 
+                variants={itemVariants}
+                role="listitem"
+                aria-labelledby={`project-title-${project.id}`}
+              >
+                <ProjectImageContainer>
+                  <ProjectImage 
+                    imageUrl={project.images[currentImageIndex]} 
+                    role="img" 
+                    aria-label={`Screenshot of ${project.title}`} 
+                  />
+                  {hasMultipleImages && (
+                    <>
+                      <PrevButton
+                        onClick={() => handlePrevImage(project.id, project.images.length)}
+                        aria-label="Previous image"
+                      >
+                        <FaChevronLeft />
+                      </PrevButton>
+                      <NextButton
+                        onClick={() => handleNextImage(project.id, project.images.length)}
+                        aria-label="Next image"
+                      >
+                        <FaChevronRight />
+                      </NextButton>
+                      <ImageIndicators>
+                        {project.images.map((_, index) => (
+                          <Indicator
+                            key={index}
+                            active={index === currentImageIndex}
+                            onClick={() => handleIndicatorClick(project.id, index)}
+                            aria-label={`Go to image ${index + 1}`}
+                          />
+                        ))}
+                      </ImageIndicators>
+                    </>
+                  )}
+                </ProjectImageContainer>
+                <ProjectContent>
+                  <ProjectTitle id={`project-title-${project.id}`}>{project.title}</ProjectTitle>
+                  <ProjectDescription>{project.description}</ProjectDescription>
+                  <TechStack role="list" aria-label={`Technologies used in ${project.title}`}>
+                    {project.techStack.map((tech) => (
+                      <TechTag key={tech} role="listitem">{tech}</TechTag>
+                    ))}
+                  </TechStack>
+                  <ProjectLinks>
+                    {project.githubUrl && <a 
+                      href={project.githubUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label={`View ${project.title} source code on GitHub`}
+                    >
+                      <FaGithub aria-hidden="true" />
+                      <span className="sr-only">GitHub repository</span>
+                    </a>}
+                    {project.liveUrl && <a 
+                      href={project.liveUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label={`Visit ${project.title} live site`}
+                    >
+                      <FaExternalLinkAlt aria-hidden="true" />
+                      <span className="sr-only">Live site</span>
+                    </a>}
+                  </ProjectLinks>
+                </ProjectContent>
+              </ProjectCard>
+            );
+          })}
           </ProjectGrid>
         </motion.div>
       </div>

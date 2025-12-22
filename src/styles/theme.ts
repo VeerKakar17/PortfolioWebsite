@@ -2,8 +2,8 @@ export const theme = {
   colors: {
     primary: '#2A2D3E',
     secondary: '#454964',
-    accent: '#7504cc',
-    light: '#7504cc',
+    accent: '#a534de',
+    light: '#b543ee',
     text: '#ffffff',
     textLight: '#ffffff',
     textDark: '#2A2D3E',
@@ -14,7 +14,7 @@ export const theme = {
     },
     gradient: {
       main: 'linear-gradient(135deg, #2A2D3E 0%, #454964 50%, #2A2D3E 100%)',
-      accent: 'linear-gradient(135deg, #F6B17A 0%, #f8c396 100%)',
+      accent: 'linear-gradient(135deg, #a534de 0%, #b543ee 100%)',
       glass: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
     },
     overlay: {

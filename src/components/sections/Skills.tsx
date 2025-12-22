@@ -2,21 +2,28 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { theme } from '../../styles/theme';
 import { 
-  FaReact, 
-  FaNodeJs, 
-  FaDatabase, 
-  FaDocker,
-  FaGitAlt,
+  FaCode,
+  FaJava,
+  FaPython,
+  FaServer,
+  FaNetworkWired,
+  FaProjectDiagram,
+  FaDatabase,
   FaAws
 } from 'react-icons/fa';
-import { 
-  SiTypescript,
+import {
+  SiCplusplus,
   SiJavascript,
-  SiPython,
-  SiMongodb,
   SiPostgresql,
-  SiRedux
+  SiOpengl
 } from 'react-icons/si';
+import {
+  MdArchitecture,
+  MdSpeed,
+  MdTimer,
+  MdSchema,
+  MdSyncAlt
+} from 'react-icons/md';
 
 const SkillsSection = styled.section`
   min-height: 100vh;
@@ -63,7 +70,7 @@ const SkillsContainer = styled.div`
   margin-top: ${theme.spacing.xl};
 
   @media (min-width: ${theme.breakpoints.md}) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: ${theme.spacing.xl};
   }
 `;
@@ -153,35 +160,45 @@ const SkillItem = styled(motion.div)`
 
 const skillCategories = [
   {
-    title: 'Languages',
-    icon: <FaReact />,
+    title: 'Programming Languages',
+    icon: <FaCode />,
     skills: [
-      { name: 'C/C++', icon: <FaReact /> },
-      { name: 'Java', icon: <SiTypescript /> },
-      { name: 'Python', icon: <SiJavascript /> },
-      { name: 'Redux', icon: <SiRedux /> },
+      { name: 'C/C++', icon: <SiCplusplus /> },
+      { name: 'Java', icon: <FaJava /> },
+      { name: 'Python', icon: <FaPython /> },
+      { name: 'Javascript', icon: <SiJavascript /> },
     ],
   },
   {
-    title: 'Backend',
-    icon: <FaNodeJs />,
+    title: 'Backend & Systems Engineering',
+    icon: <FaServer />,
     skills: [
-      { name: 'Node.js', icon: <FaNodeJs /> },
-      { name: 'Python', icon: <SiPython /> },
-      { name: 'MongoDB', icon: <SiMongodb /> },
+      { name: 'Backend Systems Development', icon: <FaServer /> },
+      { name: 'System Design', icon: <MdArchitecture /> },
+      { name: 'Distributed Systems', icon: <FaNetworkWired /> },
+      { name: 'Message-Oriented Middleware', icon: <MdSyncAlt /> },
+    ],
+  },
+  {
+    title: 'Performance & Real-Time Systems',
+    icon: <MdSpeed />,
+    skills: [
+      { name: 'Multithreading & Concurrency', icon: <FaProjectDiagram /> },
+      { name: 'Real-Time Systems', icon: <MdTimer /> },
+      { name: 'Performance Optimization', icon: <MdSpeed /> },
+      { name: 'Low-Level Rendering (OpenGL)', icon: <SiOpengl /> },
+    ],
+  },
+  {
+    title: 'Data & Infrastructure',
+    icon: <FaDatabase />,
+    skills: [
+      { name: 'Database Systems', icon: <FaDatabase /> },
       { name: 'PostgreSQL', icon: <SiPostgresql /> },
+      { name: 'Data Modeling & Schema Design', icon: <MdSchema  /> },
+      { name: 'Cloud Infrastructure (AWS)', icon: <FaAws /> },
     ],
-  },
-  {
-    title: 'DevOps',
-    icon: <FaDocker />,
-    skills: [
-      { name: 'Docker', icon: <FaDocker /> },
-      { name: 'Git', icon: <FaGitAlt /> },
-      { name: 'AWS', icon: <FaAws /> },
-      { name: 'CI/CD', icon: <FaDatabase /> },
-    ],
-  },
+  }
 ];
 
 const Skills = () => {

@@ -130,11 +130,10 @@ export const Hero = () => {
               Hi, I'm Veer Kakar
             </Title>
             <Subtitle role="heading" aria-level={3}>
-              Software Developer
+        	Software Developer
             </Subtitle>
             <Description role="paragraph">
-              I create elegant solutions to complex problems, specializing in modern web development
-              with a focus on user experience and clean code.
+		 	I’m a Computer Science undergraduate pursuing an accelerated Master’s degree, with a focus on backend and systems software engineering. I enjoy building performance-critical systems, backend infrastructure, and automation tools, with experience ranging from low-level C++ systems to distributed backend platforms.
             </Description>
             <SocialLinks role="list" aria-label="Social media links">
               <a 
