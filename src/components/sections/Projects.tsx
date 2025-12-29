@@ -274,7 +274,7 @@ const projects = [
   {
     id: 1,
     title: "Transforma Tech Generators for ACE",
-    description: "Designed and developed a full-stack application end-to-end that automatically generates IBM App Connect Enterprise (ACE) integration projects from input JSON, XML, or DFDL schemas. The system maps inputs to configurable templates to produce ESQL code, message flows, and messaging infrastructure, including MQ queues and Kafka topics. Built using Spring Boot for the backend and React for the frontend.",
+    description: "Designed and developed a full-stack application end-to-end that automatically generates IBM App Connect Enterprise (ACE) integration projects from input JSON, XML, or DFDL schemas. The system maps inputs to automatically generated templates to produce ESQL code, message flows, and messaging infrastructure, including MQ queues and Kafka topics. Built using Spring Boot for the backend and React for the frontend.",
     images: ["/PortfolioWebsite/TTGenerators1.png", "/PortfolioWebsite/TTGenerators2.png", "/PortfolioWebsite/TTGenerators3.png"],
     techStack: ["Java", "Spring Boot", "Messaging Systems", "Apache Kafka", "System Design", "RESTful API Design", "Code Generation"],
     liveUrl: "http://www.transformatech.com/products/transformatech-accelerators-for-ibm-ace/"
@@ -282,7 +282,7 @@ const projects = [
   {
     id: 2,
     title: "Mini-Minecraft",
-    description: "Developed a high-performance Minecraft recreation in C++ using OpenGL, with a focus on real-time rendering and systems-level optimization. Implemented multithreaded terrain generation and face-culling to minimize rendering overhead, and designed a custom redstone logic system from scratch. Repository is private, but code is available upon request. Demo video can be seen with the link below.",
+    description: "Developed a high-performance Minecraft recreation in C++ using OpenGL, with a focus on real-time rendering and systems-level optimization. Implemented multithreaded terrain generation and face-culling to minimize rendering overhead, and designed a custom redstone logic system from scratch. Code is available upon request. Demo video can be found with the link below.",
     images: ["/PortfolioWebsite/MiniMinecraftBlock.png", "/PortfolioWebsite/MiniMinecraftInventory.png", "/PortfolioWebsite/MiniMinecraftRedstone.png"],
     techStack: ["C++", "Graphics (OpenGL)", "Multithreading & Concurrency", "Performance Optimization", "Systems Programming"],
     liveUrl: "https://www.youtube.com/playlist?list=PLS0hPwkzcr9sHUFkR2NTA9FKZixdtvJLW",
@@ -290,7 +290,7 @@ const projects = [
   {
     id: 3,
     title: "Game Mash",
-    description: "Built a full-stack web application to aggregate and query large-scale game datasets (4 datasets with 100,000+ entries each). Designed and normalized a relational database schema, implemented data preprocessing pipelines, and deployed a PostgreSQL backend on AWS for efficient querying and search. Repository is private, but code is available on request.",
+    description: "Built a full-stack web application to aggregate and query large-scale game datasets (4 datasets with 100,000+ entries each). Designed and normalized a relational database schema, implemented data preprocessing pipelines, and deployed a PostgreSQL backend on AWS for efficient querying and search. Code is available on request.",
     images: ["/PortfolioWebsite/GameMashSearchScreen.png", "/PortfolioWebsite/GameMashGenreScreen.png", "/PortfolioWebsite/GameMashInfoScreen.png"],
     techStack: ["Relational Databse Systems", "AWS", "PostgreSQL", "Full-Stack Development", "Data Processing", "System Design"],
   },
