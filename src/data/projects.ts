@@ -559,12 +559,19 @@ export const additionalProjects = projects.filter((project) => !project.featured
 export const experienceItems = [
   {
     title: 'Roblox',
-    summary: 'Software engineering experience in production-scale systems and team workflows.',
+    role: 'Software Engineering Intern',
+    period: 'May 2026 - Present',
+    summary:
+      'Backend infrastructure work for IP licensing systems, with emphasis on service boundaries, RPC contracts, durable async workflows, consistency behavior, and production metrics. The work maps closely to the distributed-systems side of this portfolio: designing reliable cross-service behavior and shipping it inside a large product organization.',
+    tags: ['Temporal', 'RPCs', 'Distributed Systems', 'Backend Services', 'Schemas', 'Metrics'],
   },
   {
     title: 'Transforma Tech',
+    role: 'Software Engineering Intern',
+    period: 'May 2025 - Aug. 2025',
     summary:
-      'Built ACE integration generators that produce ESQL code, message flows, MQ queues, and Kafka topics from JSON, XML, or DFDL schemas.',
+      'Enterprise integration engineering around IBM App Connect Enterprise, schema-driven code generation, and asynchronous data movement between heterogeneous systems. The work centered on practical backend tooling: turning structured schemas into repeatable integration artifacts and supporting MQ/Kafka-based pipelines.',
+    tags: ['Java', 'IBM ACE', 'Kafka', 'IBM MQ', 'Enterprise Integration'],
     links: [
       {
         label: 'External Site',
@@ -575,6 +582,10 @@ export const experienceItems = [
   },
   {
     title: 'Penn OS/DSA TA',
-    summary: 'Teaching assistant work across operating systems and data structures courses.',
+    role: 'Operating Systems and DSA Teaching Assistant',
+    period: 'May 2025 - Present',
+    summary:
+      'Teaching work across operating systems, data structures, algorithms, proofs, programming assignments, and systems projects. This reinforces the same core areas shown in the project work: OS concepts, rigorous debugging, algorithmic reasoning, and system-design explanation.',
+    tags: ['Operating Systems', 'Algorithms', 'Systems Projects', 'Teaching'],
   },
 ];

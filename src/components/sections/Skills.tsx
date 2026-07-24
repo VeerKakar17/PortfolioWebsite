@@ -1,277 +1,292 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import type { IconType } from 'react-icons';
+import { FaDatabase, FaMicrochip, FaNetworkWired, FaServer } from 'react-icons/fa';
+import { MdArchitecture, MdSpeed } from 'react-icons/md';
 import { theme } from '../../styles/theme';
-import { 
-  FaCode,
-  FaJava,
-  FaPython,
-  FaServer,
-  FaNetworkWired,
-  FaProjectDiagram,
-  FaDatabase,
-  FaAws
-} from 'react-icons/fa';
-import {
-  SiCplusplus,
-  SiPostgresql,
-  SiOpengl
-} from 'react-icons/si';
-import {
-  MdArchitecture,
-  MdSpeed,
-  MdTimer,
-  MdSchema,
-  MdSyncAlt
-} from 'react-icons/md';
-import {
-  DiDotnet
-} from 'react-icons/di';
+
+interface SkillGroup {
+  title: string;
+  icon: IconType;
+  items: string[];
+}
+
+const coreStrengths = [
+  'Kernel / OS internals',
+  'CUDA + GPU architecture',
+  'Graphics engine programming',
+  'Backend infrastructure',
+  'Bare-metal embedded firmware',
+  'Database systems',
+];
+
+const coursework = [
+  'Operating Systems',
+  'GPU Programming & Architecture',
+  'Computer Graphics',
+  'Distributed Systems',
+  'Embedded Systems',
+  'Databases',
+  'Network Security',
+  'Algorithms',
+  'Rust',
+  'Machine Learning',
+];
+
+const skillGroups: SkillGroup[] = [
+  {
+    title: 'Systems Programming',
+    icon: FaMicrochip,
+    items: ['C/C++ systems programming', 'Rust', 'AArch64 / ARMv8-A', 'Virtual memory + paging', 'Filesystems / VFS', 'Device drivers'],
+  },
+  {
+    title: 'Graphics + GPU',
+    icon: MdSpeed,
+    items: ['CUDA kernel programming', 'GPU architecture', 'OpenGL rendering pipelines', 'Vulkan', 'Real-time rendering engines', 'Profiling and optimization'],
+  },
+  {
+    title: 'Backend Infrastructure',
+    icon: FaServer,
+    items: ['Service boundaries', 'RPC contracts', 'Schema design', 'Consistency semantics', 'Temporal workflows', 'Post-launch metrics'],
+  },
+  {
+    title: 'Distributed + Security',
+    icon: FaNetworkWired,
+    items: ['Distributed systems', 'Network security', 'Concurrency', 'Async execution', 'Fault tolerance', 'Kafka / IBM MQ'],
+  },
+  {
+    title: 'Embedded Robotics',
+    icon: FaMicrochip,
+    items: ['Bare-metal firmware', 'ATmega328PB / ESP32', 'SPI and ESP-NOW', 'Motor control', 'IR proximity sensing', 'Robot coordination'],
+  },
+  {
+    title: 'Data + Product Engineering',
+    icon: FaDatabase,
+    items: ['PostgreSQL + SQL', 'BCNF data modeling', 'Query optimization', 'Kotlin / Jetpack Compose', 'React / TypeScript', 'CI/CD + team workflows'],
+  },
+];
 
 const SkillsSection = styled.section`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
+  padding: ${theme.spacing.xl} 0;
   color: ${theme.colors.textLight};
-  padding: ${theme.spacing.lg} ${theme.spacing.md};
 
-  @media (min-width: ${theme.breakpoints.md}) {
-    padding: ${theme.spacing.xl} ${theme.spacing.lg};
+  .container {
+    max-width: 1080px;
   }
 `;
 
-const SectionTitle = styled(motion.h2)`
-  text-align: center;
-  font-size: clamp(2rem, 4vw, 2.5rem);
-  margin-bottom: ${theme.spacing.xl};
-  color: ${theme.colors.light};
-  position: relative;
+const SectionHeader = styled.div`
+  max-width: 780px;
+  margin-bottom: ${theme.spacing.lg};
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -${theme.spacing.md};
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 4px;
-    background-color: ${theme.colors.light};
-    border-radius: 2px;
+  h2 {
+    color: ${theme.colors.light};
+    font-size: clamp(1.75rem, 4vw, 2.4rem);
+    margin-bottom: ${theme.spacing.sm};
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: clamp(0.98rem, 2vw, 1.1rem);
+    line-height: 1.7;
   }
 `;
 
-const SkillsContainer = styled.div`
+const ContentGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
   gap: ${theme.spacing.lg};
-  width: 100%;
-  max-width: 1200px;
-  margin-top: ${theme.spacing.xl};
+`;
 
-  @media (min-width: ${theme.breakpoints.md}) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: ${theme.spacing.xl};
+const TopGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: ${theme.spacing.lg};
+  align-items: stretch;
+
+  @media (max-width: ${theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
   }
 `;
 
-const SkillCategory = styled(motion.div)`
+const StrengthPanel = styled(motion.article)`
+  background: rgba(0, 255, 255, 0.065);
+  border: 1px solid rgba(0, 255, 255, 0.22);
+  border-radius: 8px;
+  padding: ${theme.spacing.lg};
+
+  h3 {
+    color: ${theme.colors.light};
+    font-size: 1rem;
+    letter-spacing: 0;
+    margin-bottom: ${theme.spacing.md};
+    text-transform: uppercase;
+  }
+`;
+
+const StrengthList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: ${theme.spacing.sm};
+
+  @media (max-width: ${theme.breakpoints.sm}) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const StrengthTag = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 34px;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: ${theme.colors.textDark};
+  background: ${theme.colors.light};
+  font-size: 0.82rem;
+  font-weight: 800;
+`;
+
+const Panel = styled(motion.article)`
   background: ${theme.colors.glass.background};
   backdrop-filter: blur(8px);
-  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   padding: ${theme.spacing.lg};
-  transition: all ${theme.transitions.default};
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  max-width: 400px;
-  margin: 0 auto;
-  width: 100%;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(204, 35, 236, 0.2); 
-  }
 `;
 
-const CategoryTitle = styled.h3`
-  font-size: clamp(1.5rem, 3vw, 1.75rem);
-  margin-bottom: ${theme.spacing.xl};
+const PanelTitle = styled.h3`
+  display: flex;
+  align-items: center;
+  gap: ${theme.spacing.sm};
   color: ${theme.colors.light};
-  display: flex;
-  align-items: center;
-  gap: ${theme.spacing.sm};
-  font-weight: 600;
-  position: relative;
-  padding-bottom: ${theme.spacing.md};
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 40px;
-    height: 3px;
-    background-color: ${theme.colors.accent};
-    border-radius: 2px;
-  }
+  font-size: 1.08rem;
+  margin-bottom: ${theme.spacing.md};
 
   svg {
-    font-size: clamp(1.75rem, 3vw, 2rem);
     color: ${theme.colors.accent};
+    flex: 0 0 auto;
   }
 `;
 
-const SkillsList = styled.div`
+const CourseworkGrid = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${theme.spacing.sm};
+`;
+
+const CourseTag = styled.span`
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border-radius: 6px;
+  padding: 6px 10px;
+  background: rgba(42, 45, 62, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.86rem;
+  font-weight: 700;
+`;
+
+const SkillsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: ${theme.spacing.md};
-  flex: 1;
-  width: 100%;
 `;
 
-const SkillItem = styled(motion.div)`
-  display: flex;
-  align-items: center;
-  gap: ${theme.spacing.sm};
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
+const SkillCard = styled(motion.article)`
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   padding: ${theme.spacing.md};
-  border-radius: 12px;
-  transition: all ${theme.transitions.default};
-  background: ${theme.colors.glass.card};
+`;
 
-  svg {
-    font-size: clamp(1.1rem, 2vw, 1.5rem);
-    color: ${theme.colors.accent};
-    transition: all ${theme.transitions.default};
-  }
+const SkillItems = styled.ul`
+  list-style: none;
+  display: grid;
+  gap: 7px;
 
-  &:hover {
-    background: ${theme.colors.gradient.glass};
-    transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(204, 35, 236, 0.2); 
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: ${theme.spacing.xs};
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.9rem;
+    line-height: 1.45;
 
-    svg {
-      transform: scale(1.1) rotate(5deg);
-      color: ${theme.colors.light};
+    &::before {
+      content: '';
+      flex: 0 0 6px;
+      width: 6px;
+      height: 6px;
+      margin-top: 0.55em;
+      border-radius: 999px;
+      background: ${theme.colors.accent};
     }
   }
 `;
 
-const skillCategories = [
-  {
-    title: 'Programming Languages',
-    icon: <FaCode />,
-    skills: [
-      { name: 'C/C++', icon: <SiCplusplus /> },
-      { name: 'Java', icon: <FaJava /> },
-      { name: 'Python', icon: <FaPython /> },
-      { name: 'C#', icon: <DiDotnet /> },
-    ],
-  },
-  {
-    title: 'Backend & Systems Engineering',
-    icon: <FaServer />,
-    skills: [
-      { name: 'Backend Systems Development', icon: <FaServer /> },
-      { name: 'System Design', icon: <MdArchitecture /> },
-      { name: 'Distributed Systems', icon: <FaNetworkWired /> },
-      { name: 'Message-Oriented Middleware', icon: <MdSyncAlt /> },
-    ],
-  },
-  {
-    title: 'Performance & Real-Time Systems',
-    icon: <MdSpeed />,
-    skills: [
-      { name: 'Multithreading & Concurrency', icon: <FaProjectDiagram /> },
-      { name: 'Real-Time Systems', icon: <MdTimer /> },
-      { name: 'Performance Optimization', icon: <MdSpeed /> },
-      { name: 'Low-Level Rendering (OpenGL)', icon: <SiOpengl /> },
-    ],
-  },
-  {
-    title: 'Data & Infrastructure',
-    icon: <FaDatabase />,
-    skills: [
-      { name: 'Database Systems', icon: <FaDatabase /> },
-      { name: 'PostgreSQL', icon: <SiPostgresql /> },
-      { name: 'Data Modeling & Schema Design', icon: <MdSchema  /> },
-      { name: 'Cloud Infrastructure (AWS)', icon: <FaAws /> },
-    ],
-  }
-];
+const sectionVariants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
+};
 
 const Skills = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
   return (
-    <SkillsSection id="skills" role="region" aria-label="Skills and Expertise">
-      <SectionTitle
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        role="heading"
-        aria-level={2}
-      >
-       Core Skills & Expertise
-      </SectionTitle>
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <SkillsContainer role="list">
-          {skillCategories.map((category, index) => (
-            <SkillCategory 
-              key={index} 
-              variants={itemVariants}
-              role="listitem"
-              aria-labelledby={`category-title-${index}`}
-            >
-              <CategoryTitle id={`category-title-${index}`}>
-                <span aria-hidden="true">{category.icon}</span>
-                {category.title}
-              </CategoryTitle>
-              <SkillsList role="list" aria-label={`${category.title} skills`}>
-                {category.skills.map((skill, skillIndex) => (
-                  <SkillItem 
-                    key={skillIndex} 
-                    variants={itemVariants}
-                    role="listitem"
-                  >
-                    <span aria-hidden="true">{skill.icon}</span>
-                    <span>{skill.name}</span>
-                    <span className="sr-only">{`${skill.name} - ${category.title} skill`}</span>
-                  </SkillItem>
+    <SkillsSection id="skills" aria-label="Skills and relevant coursework">
+      <div className="container">
+        <SectionHeader>
+          <h2>Skills & Coursework</h2>
+          <p>
+            A systems-heavy CS background led by operating systems, GPU programming, real-time graphics, backend
+            infrastructure, distributed systems, embedded work, databases, security, and algorithms.
+          </p>
+        </SectionHeader>
+
+        <ContentGrid>
+          <TopGrid>
+            <StrengthPanel variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+              <h3>Core Strengths</h3>
+              <StrengthList>
+                {coreStrengths.map((item) => (
+                  <StrengthTag key={item}>{item}</StrengthTag>
                 ))}
-              </SkillsList>
-            </SkillCategory>
-          ))}
-        </SkillsContainer>
-      </motion.div>
+              </StrengthList>
+            </StrengthPanel>
+
+            <Panel variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+              <PanelTitle>
+                <MdArchitecture aria-hidden="true" />
+                Relevant CS Coursework
+              </PanelTitle>
+              <CourseworkGrid>
+                {coursework.map((course) => (
+                  <CourseTag key={course}>{course}</CourseTag>
+                ))}
+              </CourseworkGrid>
+            </Panel>
+          </TopGrid>
+
+          <SkillsGrid>
+            {skillGroups.map((group) => {
+              const Icon = group.icon;
+              return (
+                <SkillCard key={group.title} variants={sectionVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+                  <PanelTitle>
+                    <Icon aria-hidden="true" />
+                    {group.title}
+                  </PanelTitle>
+                  <SkillItems>
+                    {group.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </SkillItems>
+                </SkillCard>
+              );
+            })}
+          </SkillsGrid>
+        </ContentGrid>
+      </div>
     </SkillsSection>
   );
 };

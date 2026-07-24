@@ -9,6 +9,7 @@ import { GlobalStyles } from './styles/GlobalStyles';
 import { theme } from './styles/theme';
 
 const Projects = lazy(() => import('./components/sections/Projects'));
+const Skills = lazy(() => import('./components/sections/Skills'));
 const ExperienceStrip = lazy(() => import('./components/sections/ExperienceStrip'));
 const Contact = lazy(() => import('./components/sections/Contact'));
 
@@ -48,6 +49,9 @@ const HomePage = () => {
       <Hero />
       <Suspense fallback={<LoadingFallback>Loading projects...</LoadingFallback>}>
         <Projects />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback>Loading skills...</LoadingFallback>}>
+        <Skills />
       </Suspense>
       <Suspense fallback={<LoadingFallback>Loading experience...</LoadingFallback>}>
         <ExperienceStrip />

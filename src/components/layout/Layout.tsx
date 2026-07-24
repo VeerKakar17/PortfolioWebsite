@@ -193,6 +193,7 @@ export const Layout = ({ children }: LayoutProps) => {
             </Logo>
             <NavLinks role="list">
               <Link to="/#projects" role="listitem" aria-label="Projects section">Projects</Link>
+              <Link to="/#skills" role="listitem" aria-label="Skills and coursework section">Skills</Link>
             </NavLinks>
           </div>
         </Nav>
