@@ -138,7 +138,8 @@ export const projects: Project[] = [
     summary:
       'C++/OpenGL voxel engine where my work covered efficient chunk rendering, interleaved VBOs, multithreaded terrain generation, inventory/hotbar UI, redstone block-update propagation, and profiling-driven VBO optimization.',
     description:
-      'A CIS 4600 real-time voxel renderer and gameplay sandbox built around chunked terrain, OpenGL rendering, multithreaded world generation, interactive UI, and Minecraft-style simulation systems.',
+      'A real-time C++/OpenGL voxel renderer and gameplay sandbox built around chunked terrain, multithreaded world generation, interactive UI, and Minecraft-style simulation systems.',
+    status: 'Code available upon request',
     tags: ['C++', 'OpenGL', 'Multithreading', 'Real-Time Rendering', 'Optimization'],
     images: [
       asset('MiniMinecraftBlock.png'),
@@ -153,9 +154,9 @@ export const projects: Project[] = [
       },
     ],
     overview: [
-      'Mini Minecraft is a C++ and OpenGL voxel engine built for CIS 4600. The project includes procedural terrain, player physics, texturing, fluids, sound, custom block shapes, shadow mapping, inventory UI, and redstone-style logic.',
-      'My primary ownership was the systems-heavy rendering and gameplay infrastructure: efficient chunk VBO generation, multithreaded terrain/VBO work queues, inventory and hotbar rendering, redstone data propagation, and profiling-driven VBO optimizations.',
-      'Because there is no separate public project page for this repo, this writeup is meant to replace the important parts of the course README for recruiter review.',
+      'Mini Minecraft is a C++ and OpenGL voxel engine that started from an intentionally open-ended graphics assignment with limited implementation guidance. The final project grew into a much broader engine and gameplay sandbox with procedural terrain, player physics, texturing, fluids, sound, custom block shapes, shadow mapping, inventory UI, and redstone-style logic.',
+      'We pushed the project well past the baseline scope by treating the assignment as an engine-building exercise rather than a checklist. My primary ownership was the systems-heavy rendering and gameplay infrastructure: efficient chunk VBO generation, multithreaded terrain/VBO work queues, inventory and hotbar rendering, redstone data propagation, and profiling-driven VBO optimizations.',
+      'Because there is no separate public project page for this repo, this writeup captures the important technical decisions, extensions, and engineering tradeoffs for recruiter review.',
     ],
     highlights: [
       'Implemented chunk VBO generation that buffers only faces adjacent to transparent blocks or unloaded neighboring chunks.',
@@ -213,7 +214,7 @@ export const projects: Project[] = [
     results: [
       'Produced a playable voxel-engine demo with chunked terrain, block interaction, UI, redstone, water/lava systems, shadow mapping, and procedural biomes.',
       'Reduced VBO update cost through event-driven rebuilds, multithreaded generation, cached biome values, and cached block transparency/full-block checks.',
-      'Includes screenshots and a demo playlist; source is available on request.',
+      'Includes screenshots and a demo playlist; code is available upon request.',
     ],
     nextSteps: [
       'Add measured before/after timing numbers if the original profiler captures are recovered.',
