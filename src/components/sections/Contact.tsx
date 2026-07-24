@@ -1,12 +1,13 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { theme } from '../../styles/theme';
-import { FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaEnvelope, FaFileAlt, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { siteLinks } from '../../data/projects';
 
 const ContactSection = styled.section`
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
+  min-height: 40vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,7 +32,7 @@ const ContactSection = styled.section`
 
 const SectionTitle = styled(motion.h2)`
   text-align: center;
-  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
   margin-bottom: ${theme.spacing.lg};
   color: ${theme.colors.light};
   position: relative;
@@ -60,7 +61,7 @@ const ContactContent = styled.div`
   background: ${theme.colors.glass.background};
   backdrop-filter: blur(8px);
   padding: ${theme.spacing.lg};
-  border-radius: 20px;
+  border-radius: 8px;
   box-shadow: 0 8px 32px rgba(204, 35, 236, 0.15);
 
   @media (min-width: ${theme.breakpoints.md}) {
@@ -200,8 +201,8 @@ const Contact = () => {
               variants={itemVariants}
               role="paragraph"
             >
-              I'm always interested in hearing about new projects and opportunities.
-              Whether you have a question or just want to say hi, feel free to reach out!
+              I am interested in systems, embedded, graphics, GPU, backend infrastructure, and product engineering
+              roles where low-level ownership and practical shipping both matter.
             </ContactText>
             <ContactEmail 
               href="mailto:veerkakar1@gmail.com"
@@ -216,10 +217,20 @@ const Contact = () => {
             <SocialLinks 
               variants={itemVariants}
               role="list"
-              aria-label="Social media links"
+              aria-label="Profile links"
             >
+              <SocialLink
+                href={siteLinks.resume}
+                download
+                whileHover={{ y: -5 }}
+                role="listitem"
+                aria-label="Download my resume"
+              >
+                <FaFileAlt aria-hidden="true" />
+                <span className="sr-only">Resume</span>
+              </SocialLink>
               <SocialLink 
-                href="https://github.com/VeerKakar17"
+                href={siteLinks.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -5 }}
@@ -230,7 +241,7 @@ const Contact = () => {
                 <span className="sr-only">GitHub</span>
               </SocialLink>
               <SocialLink 
-                href="https://linkedin.com/in/veerkakar"
+                href={siteLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -5 }}

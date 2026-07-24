@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import { theme } from '../../styles/theme';
-import { FloatingNav } from '../navigation/FloatingNav';
 import { useKeyboardNavigation } from '../../hooks/useKeyboardNavigation';
 
 interface LayoutProps {
@@ -96,11 +96,16 @@ const Logo = styled(motion.div)`
   font-family: ${theme.fonts.heading};
   font-size: 1.5rem;
   font-weight: 700;
+
+  a {
+    color: inherit;
+  }
 `;
 
 const NavLinks = styled.div`
   display: flex;
-  gap: ${theme.spacing.lg};
+  align-items: center;
+  gap: ${theme.spacing.md};
 
   a {
     color: ${theme.colors.textLight};
@@ -116,7 +121,12 @@ const NavLinks = styled.div`
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
-    gap: ${theme.spacing.md};
+    gap: ${theme.spacing.xs};
+
+    a {
+      padding: ${theme.spacing.xs};
+      font-size: 0.92rem;
+    }
   }
 `;
 
@@ -163,16 +173,6 @@ const Footer = styled.footer`
 export const Layout = ({ children }: LayoutProps) => {
   useKeyboardNavigation();
 
-  useEffect(() => {
-    // Add keyboard navigation instructions to console
-    console.info(
-      'Keyboard Navigation:\n',
-      '- Arrow Up/Down or PageUp/PageDown: Navigate between sections\n',
-      '- Home: Go to top\n',
-      '- End: Go to bottom'
-    );
-  }, []);
-
   return (
     <LayoutWrapper>
       <SkipLink href="#main-content">
@@ -189,13 +189,10 @@ export const Layout = ({ children }: LayoutProps) => {
               role="heading"
               aria-level={1}
             >
-              Portfolio
+              <Link to="/">Veer Kakar</Link>
             </Logo>
             <NavLinks role="list">
-              <a href="#about" role="listitem" aria-label="About section">About</a>
-              <a href="#projects" role="listitem" aria-label="Projects section">Projects</a>
-              <a href="#skills" role="listitem" aria-label="Skills section">Skills</a>
-              <a href="#contact" role="listitem" aria-label="Contact section">Contact</a>
+              <Link to="/#projects" role="listitem" aria-label="Projects section">Projects</Link>
             </NavLinks>
           </div>
         </Nav>
@@ -203,7 +200,6 @@ export const Layout = ({ children }: LayoutProps) => {
       <Main id="main-content" role="main" tabIndex={-1}>
         {children}
       </Main>
-      <FloatingNav />
       <Footer role="contentinfo">
         <div className="container">
           <p>© {new Date().getFullYear()} Veer Kakar. All rights reserved.</p>

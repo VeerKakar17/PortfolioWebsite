@@ -1,8 +1,11 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { theme } from '../../styles/theme';
-import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import type { KeyboardEvent, MouseEvent } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaChevronLeft, FaChevronRight, FaExternalLinkAlt, FaFileAlt, FaGithub } from 'react-icons/fa';
+import { additionalProjects, featuredProjects, type Project, type ProjectLinkKind } from '../../data/projects';
+import { theme } from '../../styles/theme';
 
 const ProjectsSection = styled.section`
   min-height: 100vh;
@@ -10,71 +13,59 @@ const ProjectsSection = styled.section`
   flex-direction: column;
   justify-content: center;
   position: relative;
-  padding: ${theme.spacing.lg} 0;
-
-  @media (min-width: ${theme.breakpoints.md}) {
-    padding: ${theme.spacing.xl} 0;
-  }
+  padding: ${theme.spacing.xl} 0;
 `;
 
-const SectionTitle = styled(motion.h2)`
-  text-align: center;
-  font-size: clamp(2rem, 4vw, 2.5rem);
-  margin-bottom: calc(${theme.spacing.xl} * 1.5);
-  color: ${theme.colors.textLight};
-  position: relative;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -${theme.spacing.md};
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 4px;
-    background-color: ${theme.colors.accent};
-    border-radius: 2px;
+const SectionHeader = styled.div`
+  max-width: 780px;
+  margin-bottom: ${theme.spacing.xl};
+
+  h2 {
+    color: ${theme.colors.light};
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    margin-bottom: ${theme.spacing.md};
   }
 
-  @media (min-width: ${theme.breakpoints.md}) {
-    margin-bottom: calc(${theme.spacing.xl} * 2);
+  p {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.7;
   }
 `;
 
 const ProjectGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
   gap: ${theme.spacing.lg};
   width: 100%;
-  margin-top: ${theme.spacing.lg};
-
-  @media (min-width: ${theme.breakpoints.md}) {
-    gap: ${theme.spacing.xl};
-    margin-top: ${theme.spacing.xl};
-  }
 `;
 
-const ProjectCard = styled(motion.div)`
+const ProjectCard = styled(motion.article)`
   background: ${theme.colors.glass.background};
   backdrop-filter: blur(8px);
-  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   overflow: hidden;
   color: ${theme.colors.textLight};
-  transition: all ${theme.transitions.default};
-  height: 100%;
+  transition: ${theme.transitions.default};
+  min-height: 100%;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(204, 35, 236, 0.2);
+    transform: translateY(-4px);
+    border-color: rgba(204, 35, 236, 0.48);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
   }
 `;
 
-const ProjectImageContainer = styled.div`
+const ProjectVisual = styled.div`
   position: relative;
   width: 100%;
-  height: 180px;
+  height: 190px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 
   @media (min-width: ${theme.breakpoints.md}) {
     height: 220px;
@@ -84,73 +75,54 @@ const ProjectImageContainer = styled.div`
 const ProjectImage = styled.div<{ imageUrl: string }>`
   width: 100%;
   height: 100%;
-  background-image: url(${props => props.imageUrl});
+  background-image: url(${(props) => props.imageUrl});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  position: relative;
-  background-color: ${theme.colors.glass.card};
+  background-color: rgba(42, 45, 62, 0.24);
+`;
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 40%;
-    background: linear-gradient(to top, ${theme.colors.glass.card}, transparent);
-  }
+const TechnicalVisual = styled.div`
+  height: 100%;
+  padding: ${theme.spacing.md};
+  display: grid;
+  align-content: center;
+  gap: ${theme.spacing.sm};
+  background:
+    linear-gradient(135deg, rgba(0, 255, 255, 0.08), transparent 44%),
+    linear-gradient(180deg, rgba(204, 35, 236, 0.12), rgba(42, 45, 62, 0.18));
+`;
+
+const VisualLine = styled.div`
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.86);
+  border-left: 3px solid ${theme.colors.accent};
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: ${theme.spacing.xs} ${theme.spacing.sm};
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85rem;
 `;
 
 const ImageNavButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: ${theme.colors.glass.background};
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(246, 177, 122, 0.2);
-  color: ${theme.colors.accent};
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+  background: rgba(42, 45, 62, 0.84);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: ${theme.colors.light};
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all ${theme.transitions.default};
-  z-index: 10;
-  opacity: 0;
-
-  ${ProjectCard}:hover & {
-    opacity: 1;
-  }
+  z-index: 2;
 
   &:hover {
-    background: ${theme.colors.gradient.accent};
-    color: ${theme.colors.textDark};
-    border-color: ${theme.colors.accent};
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 4px 12px rgba(204, 35, 236, 0.2); 
-  }
-
-  &:active {
-    transform: translateY(-50%) scale(0.95);
-  }
-
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    
-    &:hover {
-      background: ${theme.colors.glass.background};
-      color: ${theme.colors.accent};
-      transform: translateY(-50%) scale(1);
-      box-shadow: none;
-    }
-  }
-
-  svg {
-    font-size: 16px;
+    background: rgba(204, 35, 236, 0.6);
   }
 `;
 
@@ -169,50 +141,44 @@ const ImageIndicators = styled.div`
   transform: translateX(-50%);
   display: flex;
   gap: 6px;
-  z-index: 10;
+  z-index: 2;
 `;
 
 const Indicator = styled.button<{ active: boolean }>`
   width: 8px;
   height: 8px;
-  border-radius: 50%;
-  border: 1px solid ${theme.colors.accent};
-  background: ${props => props.active ? theme.colors.accent : 'transparent'};
-  cursor: pointer;
-  transition: all ${theme.transitions.default};
+  border-radius: 999px;
+  border: 1px solid ${theme.colors.light};
+  background: ${(props) => (props.active ? theme.colors.light : 'rgba(42, 45, 62, 0.58)')};
   padding: 0;
-
-  &:hover {
-    background: ${theme.colors.accent};
-    transform: scale(1.2);
-  }
 `;
 
 const ProjectContent = styled.div`
-  padding: ${theme.spacing.md};
-  flex: 1;
+  padding: ${theme.spacing.lg};
   display: flex;
   flex-direction: column;
-
-  @media (min-width: ${theme.breakpoints.md}) {
-    padding: ${theme.spacing.lg};
-  }
+  flex: 1;
 `;
 
 const ProjectTitle = styled.h3`
-  font-size: clamp(1.25rem, 3vw, 1.5rem);
-  margin-bottom: ${theme.spacing.sm};
   color: ${theme.colors.light};
-  font-weight: 600;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  margin-bottom: ${theme.spacing.sm};
+`;
+
+const Status = styled.p`
+  color: ${theme.colors.accent};
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: ${theme.spacing.xs};
 `;
 
 const ProjectDescription = styled.p`
-  color: ${theme.colors.textLight};
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.65;
   margin-bottom: ${theme.spacing.lg};
-  font-size: clamp(0.9rem, 2vw, 1rem);
-  line-height: 1.6;
   flex: 1;
-  opacity: 0.9;
 `;
 
 const TechStack = styled.div`
@@ -220,239 +186,206 @@ const TechStack = styled.div`
   flex-wrap: wrap;
   gap: ${theme.spacing.xs};
   margin-bottom: ${theme.spacing.md};
-
-  @media (min-width: ${theme.breakpoints.md}) {
-    gap: ${theme.spacing.sm};
-    margin-bottom: ${theme.spacing.lg};
-  }
 `;
 
 const TechTag = styled.span`
-  background: ${theme.colors.glass.card};
-  color: ${theme.colors.light};
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: clamp(0.75rem, 2vw, 0.85rem);
-  font-weight: 500;
-  transition: all ${theme.transitions.default};
-
-  @media (min-width: ${theme.breakpoints.md}) {
-    padding: 6px 12px;
-  }
-
-  &:hover {
-    background: ${theme.colors.gradient.accent};
-    color: ${theme.colors.textLight};
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(204, 35, 236, 0.2);
-  }
+  background: rgba(42, 45, 62, 0.42);
+  color: ${theme.colors.textLight};
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
 `;
 
 const ProjectLinks = styled.div`
   display: flex;
-  gap: ${theme.spacing.md};
+  flex-wrap: wrap;
+  gap: ${theme.spacing.sm};
   margin-top: auto;
   padding-top: ${theme.spacing.md};
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  
-  a {
-    color: ${theme.colors.accent};
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    transition: all ${theme.transitions.default};
-    padding: ${theme.spacing.xs};
-    border-radius: 4px;
-    
-    &:hover {
-      color: ${theme.colors.light};
-      background: ${theme.colors.glass.card};
-      transform: translateY(-2px);
-    }
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+`;
+
+const Action = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: ${theme.spacing.xs};
+  min-height: 38px;
+  padding: ${theme.spacing.xs} ${theme.spacing.sm};
+  border-radius: 6px;
+  color: ${theme.colors.textLight};
+  background: rgba(255, 255, 255, 0.07);
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: ${theme.transitions.default};
+
+  &:hover {
+    color: ${theme.colors.light};
+    background: rgba(204, 35, 236, 0.2);
   }
 `;
 
-const projects = [
-  {
-    id: 1,
-    title: "Transforma Tech Generators for ACE",
-    description: "Designed and developed a full-stack application end-to-end that automatically generates IBM App Connect Enterprise (ACE) integration projects from input JSON, XML, or DFDL schemas. The system maps inputs to automatically generated templates to produce ESQL code, message flows, and messaging infrastructure, including MQ queues and Kafka topics. Built using Spring Boot for the backend and React for the frontend.",
-    images: ["/PortfolioWebsite/TTGenerators1.png", "/PortfolioWebsite/TTGenerators2.png", "/PortfolioWebsite/TTGenerators3.png"],
-    techStack: ["Java", "Spring Boot", "Messaging Systems", "Apache Kafka", "System Design", "RESTful API Design", "Code Generation"],
-    liveUrl: "http://www.transformatech.com/products/transformatech-accelerators-for-ibm-ace/"
-  },
-  {
-    id: 2,
-    title: "Mini-Minecraft",
-    description: "Developed a high-performance Minecraft recreation in C++ using OpenGL, with a focus on real-time rendering and systems-level optimization. Implemented multithreaded terrain generation and face-culling to minimize rendering overhead, and designed a custom redstone logic system from scratch. Code is available upon request. Demo video can be found with the link below.",
-    images: ["/PortfolioWebsite/MiniMinecraftBlock.png", "/PortfolioWebsite/MiniMinecraftInventory.png", "/PortfolioWebsite/MiniMinecraftRedstone.png"],
-    techStack: ["C++", "Graphics (OpenGL)", "Multithreading & Concurrency", "Performance Optimization", "Systems Programming"],
-    liveUrl: "https://www.youtube.com/playlist?list=PLS0hPwkzcr9sHUFkR2NTA9FKZixdtvJLW",
-  },
-  {
-    id: 3,
-    title: "Game Mash",
-    description: "Built a full-stack web application to aggregate and query large-scale game datasets (4 datasets with 100,000+ entries each). Designed and normalized a relational database schema, implemented data preprocessing pipelines, and deployed a PostgreSQL backend on AWS for efficient querying and search. Code is available on request.",
-    images: ["/PortfolioWebsite/GameMashSearchScreen.png", "/PortfolioWebsite/GameMashGenreScreen.png", "/PortfolioWebsite/GameMashInfoScreen.png"],
-    techStack: ["Relational Databse Systems", "AWS", "PostgreSQL", "Full-Stack Development", "Data Processing", "System Design"],
-  },
-  {
-    id: 4,
-    title: "Catanks",
-    description: "Developed a 3D Wii Tanks–inspired game built in Unity as part of a 30+ person team, with the project published on Steam and Itch.io. Collaborated across engineering and design teams using professional game development workflows to ship a production-ready title.",
-    images: ["https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3793790/a9e03a2d727e9d9b8bffecbaa8fa8ba8360b9116/header.jpg?t=1758729503"],
-    techStack: ["Unity", "C#", "Game Development", "Large-Scale Team Collaboration", "Software Engineering Practices"],
-    githubUrl: "https://github.com/pennupgrade/catanks",
-    liveUrl: "https://store.steampowered.com/app/3793790/Catanks",
+const DetailAction = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: ${theme.spacing.xs};
+  min-height: 38px;
+  padding: ${theme.spacing.xs} ${theme.spacing.sm};
+  border-radius: 6px;
+  color: ${theme.colors.textLight};
+  background: rgba(204, 35, 236, 0.18);
+  font-size: 0.9rem;
+  font-weight: 800;
+
+  &:hover {
+    color: ${theme.colors.light};
+    background: rgba(204, 35, 236, 0.32);
   }
-];
+`;
 
-const Projects = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
+const AdditionalBlock = styled.div`
+  margin-top: ${theme.spacing.xl};
+
+  h3 {
+    color: ${theme.colors.light};
+    font-size: clamp(1.35rem, 3vw, 1.8rem);
+    margin-bottom: ${theme.spacing.md};
+  }
+`;
+
+const iconForLink = (kind: ProjectLinkKind) => {
+  if (kind === 'github') return <FaGithub aria-hidden="true" />;
+  if (kind === 'docs') return <FaFileAlt aria-hidden="true" />;
+  return <FaExternalLinkAlt aria-hidden="true" />;
+};
+
+const ProjectCardView = ({ project }: { project: Project }) => {
+  const navigate = useNavigate();
+  const [imageIndex, setImageIndex] = useState(0);
+  const images = project.images ?? [];
+  const hasMultipleImages = images.length > 1;
+
+  const openDetails = () => {
+    if (project.detailLink) {
+      window.location.href = project.detailLink.url;
+      return;
+    }
+
+    navigate(`/projects/${project.slug}`);
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
+  const handleCardClick = (event: MouseEvent<HTMLElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.closest('a, button')) return;
+    openDetails();
   };
 
-  const [selectedImages, setSelectedImages] = useState<{ [key: number]: number }>({
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-  });
-
-  const handlePrevImage = (projectId: number, totalImages: number) => {
-    setSelectedImages(prev => ({
-      ...prev,
-      [projectId]: prev[projectId] > 0 ? prev[projectId] - 1 : totalImages - 1,
-    }));
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key === 'Enter') {
+      openDetails();
+    }
   };
 
-  const handleNextImage = (projectId: number, totalImages: number) => {
-    setSelectedImages(prev => ({
-      ...prev,
-      [projectId]: prev[projectId] < totalImages - 1 ? prev[projectId] + 1 : 0,
-    }));
+  const goToPreviousImage = () => {
+    setImageIndex((current) => (current > 0 ? current - 1 : images.length - 1));
   };
 
-  const handleIndicatorClick = (projectId: number, index: number) => {
-    setSelectedImages(prev => ({
-      ...prev,
-      [projectId]: index,
-    }));
+  const goToNextImage = () => {
+    setImageIndex((current) => (current < images.length - 1 ? current + 1 : 0));
   };
 
   return (
-    <ProjectsSection id="projects" role="region" aria-label="Featured Projects">
+    <ProjectCard
+      role="article"
+      tabIndex={0}
+      onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
+      aria-labelledby={`project-title-${project.slug}`}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.35 }}
+    >
+      <ProjectVisual>
+        {images.length > 0 ? (
+          <ProjectImage imageUrl={images[imageIndex]} role="img" aria-label={`${project.title} screenshot`} />
+        ) : (
+          <TechnicalVisual aria-label={`${project.title} technical summary visual`}>
+            {(project.visualLines ?? project.tags.slice(0, 4)).map((line) => (
+              <VisualLine key={line}>{line}</VisualLine>
+            ))}
+          </TechnicalVisual>
+        )}
+        {hasMultipleImages && (
+          <>
+            <PrevButton type="button" onClick={goToPreviousImage} aria-label={`Previous ${project.title} screenshot`}>
+              <FaChevronLeft aria-hidden="true" />
+            </PrevButton>
+            <NextButton type="button" onClick={goToNextImage} aria-label={`Next ${project.title} screenshot`}>
+              <FaChevronRight aria-hidden="true" />
+            </NextButton>
+            <ImageIndicators aria-hidden="true">
+              {images.map((image, index) => (
+                <Indicator key={image} active={index === imageIndex} type="button" onClick={() => setImageIndex(index)} />
+              ))}
+            </ImageIndicators>
+          </>
+        )}
+      </ProjectVisual>
+      <ProjectContent>
+        {project.status && <Status>{project.status}</Status>}
+        <ProjectTitle id={`project-title-${project.slug}`}>{project.title}</ProjectTitle>
+        <ProjectDescription>{project.description}</ProjectDescription>
+        <TechStack aria-label={`${project.title} technologies`}>
+          {project.tags.slice(0, 6).map((tech) => (
+            <TechTag key={tech}>{tech}</TechTag>
+          ))}
+        </TechStack>
+        <ProjectLinks>
+          <DetailAction type="button" onClick={openDetails}>
+            {project.detailLink?.label ?? 'Details'}
+            <FaExternalLinkAlt aria-hidden="true" />
+          </DetailAction>
+          {project.links.map((link) => (
+            <Action key={`${project.slug}-${link.label}`} href={link.url} target="_blank" rel="noopener noreferrer">
+              {iconForLink(link.kind)}
+              {link.label}
+            </Action>
+          ))}
+        </ProjectLinks>
+      </ProjectContent>
+    </ProjectCard>
+  );
+};
+
+const Projects = () => {
+  return (
+    <ProjectsSection id="projects" role="region" aria-label="Featured projects">
       <div className="container">
-        <SectionTitle
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          role="heading"
-          aria-level={2}
-        >
-          Featured Projects
-        </SectionTitle>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <ProjectGrid role="list">
-          {projects.map((project) => {
-            const currentImageIndex = selectedImages[project.id];
-            const hasMultipleImages = project.images.length > 1;
-            
-            return (
-              <ProjectCard 
-                key={project.id} 
-                variants={itemVariants}
-                role="listitem"
-                aria-labelledby={`project-title-${project.id}`}
-              >
-                <ProjectImageContainer>
-                  <ProjectImage 
-                    imageUrl={project.images[currentImageIndex]} 
-                    role="img" 
-                    aria-label={`Screenshot of ${project.title}`} 
-                  />
-                  {hasMultipleImages && (
-                    <>
-                      <PrevButton
-                        onClick={() => handlePrevImage(project.id, project.images.length)}
-                        aria-label="Previous image"
-                      >
-                        <FaChevronLeft />
-                      </PrevButton>
-                      <NextButton
-                        onClick={() => handleNextImage(project.id, project.images.length)}
-                        aria-label="Next image"
-                      >
-                        <FaChevronRight />
-                      </NextButton>
-                      <ImageIndicators>
-                        {project.images.map((_, index) => (
-                          <Indicator
-                            key={index}
-                            active={index === currentImageIndex}
-                            onClick={() => handleIndicatorClick(project.id, index)}
-                            aria-label={`Go to image ${index + 1}`}
-                          />
-                        ))}
-                      </ImageIndicators>
-                    </>
-                  )}
-                </ProjectImageContainer>
-                <ProjectContent>
-                  <ProjectTitle id={`project-title-${project.id}`}>{project.title}</ProjectTitle>
-                  <ProjectDescription>{project.description}</ProjectDescription>
-                  <TechStack role="list" aria-label={`Technologies used in ${project.title}`}>
-                    {project.techStack.map((tech) => (
-                      <TechTag key={tech} role="listitem">{tech}</TechTag>
-                    ))}
-                  </TechStack>
-                  <ProjectLinks>
-                    {project.githubUrl && <a 
-                      href={project.githubUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      aria-label={`View ${project.title} source code on GitHub`}
-                    >
-                      <FaGithub aria-hidden="true" />
-                      <span className="sr-only">GitHub repository</span>
-                    </a>}
-                    {project.liveUrl && <a 
-                      href={project.liveUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      aria-label={`Visit ${project.title} live site`}
-                    >
-                      <FaExternalLinkAlt aria-hidden="true" />
-                      <span className="sr-only">Live site</span>
-                    </a>}
-                  </ProjectLinks>
-                </ProjectContent>
-              </ProjectCard>
-            );
-          })}
-          </ProjectGrid>
-        </motion.div>
+        <SectionHeader>
+          <h2>Featured Projects</h2>
+          <p>
+            Project-focused writeups across operating systems, GPU programming, embedded robotics, production mobile
+            engineering, graphics, and shipped games.
+          </p>
+        </SectionHeader>
+
+        <ProjectGrid role="list">
+          {featuredProjects.map((project) => (
+            <ProjectCardView key={project.slug} project={project} />
+          ))}
+        </ProjectGrid>
+
+        {additionalProjects.length > 0 && (
+          <AdditionalBlock>
+            <h3>Additional Projects</h3>
+            <ProjectGrid role="list">
+              {additionalProjects.map((project) => (
+                <ProjectCardView key={project.slug} project={project} />
+              ))}
+            </ProjectGrid>
+          </AdditionalBlock>
+        )}
       </div>
     </ProjectsSection>
   );

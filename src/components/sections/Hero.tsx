@@ -1,55 +1,38 @@
 import styled from '@emotion/styled';
-import { theme } from '../../styles/theme';
 import { keyframes } from '@emotion/react';
-import { lazy, Suspense } from 'react';
-const FaGithub = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaGithub })));
-const FaLinkedin = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaLinkedin })));
-const FaEnvelope = lazy(() => import('react-icons/fa').then(mod => ({ default: mod.FaEnvelope })));
+import { FaEnvelope, FaFileAlt, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { siteLinks } from '../../data/projects';
+import { theme } from '../../styles/theme';
 
 const HeroSection = styled.section`
-  min-height: calc(100vh - 4.5rem);
+  min-height: calc(78vh - 4.5rem);
   display: flex;
   align-items: center;
-  position: relative;
-  overflow: hidden;
   color: ${theme.colors.textLight};
-  padding: ${theme.spacing.lg} 0;
-
-  @media (min-width: ${theme.breakpoints.md}) {
-    padding: ${theme.spacing.xl} 0;
-  }
+  padding: ${theme.spacing.xl} 0 ${theme.spacing.lg};
 
   .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 95%;
-    
-    @media (min-width: ${theme.breakpoints.sm}) {
-      width: 90%;
-    }
+    max-width: 1080px;
   }
 `;
 
 const HeroContent = styled.div`
-  position: relative;
-  z-index: 1;
-  max-width: 1000px;
-  width: 100%;
+  max-width: 900px;
   background: ${theme.colors.glass.background};
   backdrop-filter: blur(8px);
-  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   padding: ${theme.spacing.lg};
-  border: none;
 
   @media (min-width: ${theme.breakpoints.md}) {
     padding: ${theme.spacing.xl};
   }
 `;
 
-const fadeUpKeyframes = keyframes`
+const fadeUp = keyframes`
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -58,65 +41,60 @@ const fadeUpKeyframes = keyframes`
 `;
 
 const Title = styled.h1`
-  animation: ${fadeUpKeyframes} 0.5s ease-out forwards;
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  margin-bottom: ${theme.spacing.md};
+  animation: ${fadeUp} 0.45s ease-out forwards;
   color: ${theme.colors.light};
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
+  font-size: clamp(2.7rem, 8vw, 5rem);
+  line-height: 1.05;
+  margin-bottom: ${theme.spacing.md};
 `;
 
-const Subtitle = styled.h2`
-  animation: ${fadeUpKeyframes} 0.5s ease-out 0.2s forwards;
+const Positioning = styled.p`
+  animation: ${fadeUp} 0.45s ease-out 0.1s forwards;
   opacity: 0;
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
-  margin-bottom: ${theme.spacing.lg};
-  opacity: 0.9;
-  font-weight: 500;
+  color: ${theme.colors.textLight};
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 700;
+  line-height: 1.35;
+  max-width: 850px;
+  margin-bottom: ${theme.spacing.md};
 `;
 
 const Description = styled.p`
-  animation: ${fadeUpKeyframes} 0.5s ease-out 0.4s forwards;
+  animation: ${fadeUp} 0.45s ease-out 0.2s forwards;
   opacity: 0;
-  font-size: clamp(1rem, 1.2vw, 1.2rem);
-  max-width: 600px;
-  margin-bottom: ${theme.spacing.xl};
-  opacity: 0.8;
-  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  max-width: 720px;
+  line-height: 1.75;
+  margin-bottom: ${theme.spacing.lg};
 `;
 
-const SocialLinks = styled.div`
-  animation: ${fadeUpKeyframes} 0.5s ease-out 0.6s forwards;
+const ActionRow = styled.div`
+  animation: ${fadeUp} 0.45s ease-out 0.3s forwards;
   opacity: 0;
   display: flex;
-  gap: ${theme.spacing.md};
-  
-  a {
-    color: ${theme.colors.textLight};
-    font-size: 1.5rem;
-    transition: all ${theme.transitions.default};
-    padding: ${theme.spacing.xs};
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: ${theme.colors.glass.background};
-    
-    &:hover {
-      color: ${theme.colors.light};
-      transform: translateY(-3px);
-      background: ${theme.colors.glass.card};
-      box-shadow: 0 4px 12px rgba(204, 35, 236, 0.2); 
-    }
-  }
+  flex-wrap: wrap;
+  gap: ${theme.spacing.sm};
+`;
 
-  @media (min-width: ${theme.breakpoints.md}) {
-    gap: ${theme.spacing.lg};
-    
-    a {
-      font-size: 1.75rem;
-    }
+const HeroLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${theme.spacing.sm};
+  min-height: 42px;
+  padding: ${theme.spacing.sm} ${theme.spacing.md};
+  border-radius: 6px;
+  color: ${theme.colors.textLight};
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 800;
+  transition: ${theme.transitions.default};
+
+  &:hover {
+    color: ${theme.colors.light};
+    border-color: ${theme.colors.accent};
+    background: rgba(204, 35, 236, 0.16);
   }
 `;
 
@@ -125,53 +103,30 @@ export const Hero = () => {
     <HeroSection id="hero" role="region" aria-label="Introduction">
       <div className="container">
         <HeroContent>
-          <div>
-            <Title role="heading" aria-level={2}>
-              Hi, I'm Veer Kakar
-            </Title>
-            <Subtitle role="heading" aria-level={3}>
-        	Software Engineer
-            </Subtitle>
-            <Description role="paragraph">
-		 	I’m a Computer Science undergraduate pursuing an accelerated Master’s degree, with a focus on backend and systems software engineering. I enjoy building performance-critical systems, backend infrastructure, and automation tools, with experience ranging from low-level C++ systems to distributed backend platforms.
-            </Description>
-            <SocialLinks role="list" aria-label="Social media links">
-              <a 
-                href="https://github.com/VeerKakar17" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="Visit my GitHub profile"
-                role="listitem"
-              >
-                <Suspense fallback={<div style={{ width: '1.5rem', height: '1.5rem' }} />}>
-                  <FaGithub aria-hidden="true" />
-                </Suspense>
-                <span className="sr-only">GitHub</span>
-              </a>
-              <a 
-                href="https://linkedin.com/in/veerkakar" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                aria-label="Visit my LinkedIn profile"
-                role="listitem"
-              >
-                <Suspense fallback={<div style={{ width: '1.5rem', height: '1.5rem' }} />}>
-                  <FaLinkedin aria-hidden="true" />
-                </Suspense>
-                <span className="sr-only">LinkedIn</span>
-              </a>
-              <a 
-                href="mailto:veerkakar1@gmail.com"
-                aria-label="Send me an email"
-                role="listitem"
-              >
-                <Suspense fallback={<div style={{ width: '1.5rem', height: '1.5rem' }} />}>
-                  <FaEnvelope aria-hidden="true" />
-                </Suspense>
-                <span className="sr-only">Email</span>
-              </a>
-            </SocialLinks>
-          </div>
+          <Title>Veer Kakar</Title>
+          <Positioning>Systems software, embedded robotics, real-time graphics, and production Android.</Positioning>
+          <Description>
+            I am a computer science student building projects close to the metal: a Raspberry Pi 5 OS, CUDA and
+            graphics work, embedded robot swarms, voxel engine systems, and shipped team software.
+          </Description>
+          <ActionRow aria-label="Primary links">
+            <HeroLink href={siteLinks.resume} download>
+              <FaFileAlt aria-hidden="true" />
+              Resume
+            </HeroLink>
+            <HeroLink href={siteLinks.github} target="_blank" rel="noopener noreferrer">
+              <FaGithub aria-hidden="true" />
+              GitHub
+            </HeroLink>
+            <HeroLink href={siteLinks.linkedin} target="_blank" rel="noopener noreferrer">
+              <FaLinkedin aria-hidden="true" />
+              LinkedIn
+            </HeroLink>
+            <HeroLink href={siteLinks.email}>
+              <FaEnvelope aria-hidden="true" />
+              Email
+            </HeroLink>
+          </ActionRow>
         </HeroContent>
       </div>
     </HeroSection>
