@@ -60,6 +60,11 @@ export const projects: Project[] = [
       'Drivers',
     ],
     visualLines: ['RPi5 + QEMU Pi 3B', 'EL1 kernel / EL0 user', 'VM + COW fork + mmap', 'VFS + procfs/devfs + ELF'],
+    detailLink: {
+      label: 'Docs Site',
+      url: 'https://veerkakar17.github.io/rpi-os-docs-website/',
+      kind: 'docs',
+    },
     links: [
       {
         label: 'GitHub',
@@ -127,7 +132,6 @@ export const projects: Project[] = [
       'Combines kernel, process, memory, filesystem, userspace, driver, and terminal work into a complete educational OS codebase.',
     ],
     nextSteps: [
-      'Link this card to the planned dedicated OS project website when it is ready.',
       'Continue future work around networking, multicore support, package management, GUI desktop work, and on-device C development.',
     ],
     featured: true,
