@@ -42,10 +42,10 @@ export const siteLinks = {
 
 export const projects: Project[] = [
   {
-    slug: 'bare-metal-rpi5-os',
-    title: 'Bare-Metal RPi5 Unix-Style OS',
+    slug: 'acheron-os',
+    title: 'AcheronOS',
     summary:
-      'A from-scratch AArch64 Unix-inspired OS for Raspberry Pi 5 hardware and QEMU Pi 3B with EL1/EL0 isolation, virtual memory, persistent inode filesystem, ELF userspace, shell, drivers, and graphical framebuffer terminal.',
+      'A from-scratch AArch64 Unix-inspired OS for Raspberry Pi 5 hardware and QEMU Pi 3B with EL1/EL0 isolation, virtual memory, persistent inode filesystem, ELF userspace, shell, drivers, SMP, and graphical framebuffer terminal.',
     description:
       'Documented bare-metal OS work spanning boot, privilege separation, preemptive multitasking, VM, COW fork, VFS, procfs/devfs, userspace ELF loading, device drivers, and a framebuffer TTY.',
     tags: [
@@ -62,13 +62,13 @@ export const projects: Project[] = [
     visualLines: ['RPi5 + QEMU Pi 3B', 'EL1 kernel / EL0 user', 'VM + COW fork + mmap', 'VFS + procfs/devfs + ELF'],
     detailLink: {
       label: 'Docs Site',
-      url: 'https://veerkakar17.github.io/rpi-os-docs-website/',
+      url: 'https://acheron-systems.github.io/acheron-os-docs-website/',
       kind: 'docs',
     },
     links: [
       {
         label: 'GitHub',
-        url: 'https://github.com/mkarounos4/OS-PI-is-cool',
+        url: 'https://github.com/Acheron-Systems/AcheronOS',
         kind: 'github',
       },
     ],
