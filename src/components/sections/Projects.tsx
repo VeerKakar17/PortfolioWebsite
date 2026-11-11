@@ -300,7 +300,7 @@ const ProjectCardView = ({ project }: { project: Project }) => {
     <ProjectCard
       $interactive={!project.disableDetails}
       role="article"
-      tabIndex={0}
+      tabIndex={project.disableDetails ? -1 : 0}
       onClick={handleCardClick}
       onKeyDown={handleCardKeyDown}
       aria-labelledby={`project-title-${project.slug}`}
@@ -344,20 +344,22 @@ const ProjectCardView = ({ project }: { project: Project }) => {
             <TechTag key={tech}>{tech}</TechTag>
           ))}
         </TechStack>
-        <ProjectLinks>
-          {!project.disableDetails && (
-            <DetailAction type="button" onClick={openDetails}>
-              {project.detailLink?.label ?? 'Details'}
-              <FaExternalLinkAlt aria-hidden="true" />
-            </DetailAction>
-          )}
-          {project.links.map((link) => (
-            <Action key={`${project.slug}-${link.label}`} href={link.url} target="_blank" rel="noopener noreferrer">
-              {iconForLink(link.kind)}
-              {link.label}
-            </Action>
-          ))}
-        </ProjectLinks>
+        {(!project.disableDetails || project.links.length > 0) && (
+          <ProjectLinks>
+            {!project.disableDetails && (
+              <DetailAction type="button" onClick={openDetails}>
+                {project.detailLink?.label ?? 'Details'}
+                <FaExternalLinkAlt aria-hidden="true" />
+              </DetailAction>
+            )}
+            {project.links.map((link) => (
+              <Action key={`${project.slug}-${link.label}`} href={link.url} target="_blank" rel="noopener noreferrer">
+                {iconForLink(link.kind)}
+                {link.label}
+              </Action>
+            ))}
+          </ProjectLinks>
+        )}
       </ProjectContent>
     </ProjectCard>
   );
