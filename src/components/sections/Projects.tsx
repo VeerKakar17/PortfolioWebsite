@@ -51,7 +51,7 @@ const ProjectCard = styled(motion.article)`
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  cursor: ${(props: { $interactive?: boolean }) => (props.$interactive ? 'pointer' : 'default')};
+  cursor: pointer;
 
   &:hover {
     transform: translateY(-4px);
@@ -266,8 +266,6 @@ const ProjectCardView = ({ project }: { project: Project }) => {
   const hasMultipleImages = images.length > 1;
 
   const openDetails = () => {
-    if (project.disableDetails) return;
-
     if (project.detailLink) {
       window.location.href = project.detailLink.url;
       return;
@@ -298,9 +296,8 @@ const ProjectCardView = ({ project }: { project: Project }) => {
 
   return (
     <ProjectCard
-      $interactive={!project.disableDetails}
       role="article"
-      tabIndex={project.disableDetails ? -1 : 0}
+      tabIndex={0}
       onClick={handleCardClick}
       onKeyDown={handleCardKeyDown}
       aria-labelledby={`project-title-${project.slug}`}
@@ -344,22 +341,18 @@ const ProjectCardView = ({ project }: { project: Project }) => {
             <TechTag key={tech}>{tech}</TechTag>
           ))}
         </TechStack>
-        {(!project.disableDetails || project.links.length > 0) && (
-          <ProjectLinks>
-            {!project.disableDetails && (
-              <DetailAction type="button" onClick={openDetails}>
-                {project.detailLink?.label ?? 'Details'}
-                <FaExternalLinkAlt aria-hidden="true" />
-              </DetailAction>
-            )}
-            {project.links.map((link) => (
-              <Action key={`${project.slug}-${link.label}`} href={link.url} target="_blank" rel="noopener noreferrer">
-                {iconForLink(link.kind)}
-                {link.label}
-              </Action>
-            ))}
-          </ProjectLinks>
-        )}
+        <ProjectLinks>
+          <DetailAction type="button" onClick={openDetails}>
+            {project.detailLink?.label ?? 'Details'}
+            <FaExternalLinkAlt aria-hidden="true" />
+          </DetailAction>
+          {project.links.map((link) => (
+            <Action key={`${project.slug}-${link.label}`} href={link.url} target="_blank" rel="noopener noreferrer">
+              {iconForLink(link.kind)}
+              {link.label}
+            </Action>
+          ))}
+        </ProjectLinks>
       </ProjectContent>
     </ProjectCard>
   );

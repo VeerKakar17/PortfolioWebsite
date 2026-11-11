@@ -19,7 +19,6 @@ export interface Project {
   summary: string;
   description: string;
   status?: string;
-  disableDetails?: boolean;
   detailLink?: ProjectLink;
   tags: string[];
   images?: string[];
@@ -309,14 +308,19 @@ export const projects: Project[] = [
     summary:
       'A CUDA C++ Monte Carlo pathtracer with glTF loading, physically based materials, BVH acceleration, next-event estimation, multiple importance sampling, and GPU denoising.',
     description:
-      'GPU-accelerated physically based rendering with a performance-focused wavefront-style pipeline and custom scene features.',
+      'GPU-accelerated physically based rendering with material sorting, stream compaction, custom glTF scenes, and performance-focused rendering features.',
     detailLink: {
       label: 'Open Repository',
       url: 'https://github.com/VeerKakar17/Project3-CUDA-Path-Tracer',
       kind: 'github',
     },
     tags: ['CUDA C++', 'Path Tracing', 'BVH', 'glTF', 'PBR', 'GPU Optimization'],
-    images: [asset('CUDAPathTracerFinalRender.png'), asset('CUDAPathTracerFinalRenderNoDenoise.png')],
+    images: [
+      asset('CUDAPathTracerFinalRender.png'),
+      asset('no_box_environment.png'),
+      asset('stream-compact-optimization.png'),
+      asset('emissive_test.png'),
+    ],
     links: [],
     overview: [
       'A GPU-based Monte Carlo pathtracer written in CUDA C++ that simulates light transport through a scene and progressively accumulates a physically based image.',
@@ -333,7 +337,7 @@ export const projects: Project[] = [
       {
         title: 'GPU Rendering Pipeline',
         items: [
-          'Generates jittered camera rays, tests scene intersections, compacts terminated paths, groups work by material, evaluates BSDFs, scatters rays, and accumulates radiance.',
+          'Generates jittered camera rays, tests scene intersections, compacts terminated paths, sorts active paths by material, evaluates BSDFs, scatters rays, and accumulates radiance.',
           'Uses direct-light sampling and multiple importance sampling to improve convergence for scenes with small emissive lights.',
         ],
       },
@@ -354,23 +358,6 @@ export const projects: Project[] = [
       'Published the complete implementation and technical writeup in the linked repository.',
     ],
     featured: true,
-  },
-  {
-    slug: 'gpu-final-project',
-    title: 'GPU Final Project',
-    status: 'In progress — repository coming soon',
-    summary: 'An in-progress GPU final project. Project details and the repository will be added when the work is ready to share.',
-    description: 'In progress — details and repository coming soon.',
-    disableDetails: true,
-    tags: ['GPU Programming', 'In Progress'],
-    visualLines: ['final project', 'in progress', 'repository coming soon'],
-    links: [],
-    overview: [],
-    highlights: [],
-    implementation: [],
-    challenges: [],
-    results: [],
-    featured: false,
   },
   {
     slug: 'penn-mobile',
@@ -569,7 +556,18 @@ export const projects: Project[] = [
   },
 ];
 
-export const featuredProjects = projects.filter((project) => project.featured);
+const featuredProjectOrder = ['acheron-os', 'cuda-pathtracer'];
+
+export const featuredProjects = projects
+  .filter((project) => project.featured)
+  .sort((first, second) => {
+    const firstIndex = featuredProjectOrder.indexOf(first.slug);
+    const secondIndex = featuredProjectOrder.indexOf(second.slug);
+    if (firstIndex === -1 && secondIndex === -1) return 0;
+    if (firstIndex === -1) return 1;
+    if (secondIndex === -1) return -1;
+    return firstIndex - secondIndex;
+  });
 
 export const additionalProjects = projects.filter((project) => !project.featured);
 
