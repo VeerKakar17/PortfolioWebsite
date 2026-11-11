@@ -19,6 +19,7 @@ export interface Project {
   summary: string;
   description: string;
   status?: string;
+  disableDetails?: boolean;
   detailLink?: ProjectLink;
   tags: string[];
   images?: string[];
@@ -300,64 +301,75 @@ export const projects: Project[] = [
       'Add closed-loop motor control with wheel encoders or an IMU for more precise movement.',
       'Scale beyond four robots and support arbitrary target shapes beyond the triangular formation demo.',
     ],
-    featured: true,
+    featured: false,
   },
   {
-    slug: 'cuda-gpu-projects',
-    title: 'CIS 5650 / CUDA GPU Projects',
-    status: 'In progress',
+    slug: 'cuda-pathtracer',
+    title: 'CUDA Pathtracer',
     summary:
-      'CUDA/GPU programming projects focused on parallel algorithms, GPU architecture, profiling, and performance optimization.',
+      'A CUDA C++ Monte Carlo pathtracer with glTF loading, physically based materials, BVH acceleration, next-event estimation, multiple importance sampling, and GPU denoising.',
     description:
-      'A growing collection of CUDA work centered on kernel design, memory layout, profiling, and measurable optimization.',
-    tags: ['CUDA C++', 'GPU Programming', 'Parallel Algorithms', 'Profiling', 'Performance Optimization'],
-    visualLines: ['kernel launch geometry', 'memory coalescing', 'occupancy profiling', 'before/after metrics'],
+      'GPU-accelerated physically based rendering with a performance-focused wavefront-style pipeline and custom scene features.',
+    detailLink: {
+      label: 'Open Repository',
+      url: 'https://github.com/VeerKakar17/Project3-CUDA-Path-Tracer',
+      kind: 'github',
+    },
+    tags: ['CUDA C++', 'Path Tracing', 'BVH', 'glTF', 'PBR', 'GPU Optimization'],
+    images: [asset('CUDAPathTracerFinalRender.png'), asset('CUDAPathTracerFinalRenderNoDenoise.png')],
     links: [],
     overview: [
-      'This page is structured as the landing area for CIS 5650 GPU programming work as results are added.',
-      'The focus is on making performance claims concrete: algorithm structure, GPU memory behavior, profiling methodology, and optimization deltas.',
+      'A GPU-based Monte Carlo pathtracer written in CUDA C++ that simulates light transport through a scene and progressively accumulates a physically based image.',
+      'The renderer supports custom glTF meshes, textured and physically based materials, BVH-accelerated triangle traversal, next-event estimation, multiple importance sampling, Russian roulette path termination, and an Intel Open Image Denoiser pass.',
     ],
     highlights: [
-      'CUDA C++ kernel implementation and launch configuration.',
-      'Parallel algorithm design with attention to GPU architecture constraints.',
-      'Profiling-driven optimization rather than purely theoretical speedups.',
-      'Planned before/after measurements and visual outputs as projects mature.',
+      'Built a ray-generation, intersection, sort-and-compact, shading, scattering, and final-gather rendering pipeline.',
+      'Implemented glTF/GLB mesh loading with base-color, metallic-roughness, emissive, normal, alpha, transmission, volume, and IOR material support.',
+      'Added GGX microfacet rough metals and dielectrics, stochastic anti-aliasing, texture mapping, HDR environments, emissive geometry, and volumetric tinting.',
+      'Accelerated large triangle scenes with CPU-built BVHs and iterative GPU traversal, measuring up to 2,292.1× faster triangle intersections in the documented scene tests.',
+      'Integrated CUDA-backed Intel Open Image Denoiser using beauty, normal, and albedo buffers.',
     ],
     implementation: [
       {
-        title: 'Kernel Structure',
+        title: 'GPU Rendering Pipeline',
         items: [
-          'Document block and grid layout, thread ownership, synchronization boundaries, and divergence risks for each project.',
-          'Record how kernel decomposition changes as performance bottlenecks become visible.',
+          'Generates jittered camera rays, tests scene intersections, compacts terminated paths, groups work by material, evaluates BSDFs, scatters rays, and accumulates radiance.',
+          'Uses direct-light sampling and multiple importance sampling to improve convergence for scenes with small emissive lights.',
         ],
       },
       {
-        title: 'Memory Layout',
+        title: 'Acceleration and Materials',
         items: [
-          'Track global memory access patterns, coalescing behavior, shared-memory usage, and transfer overhead.',
-          'Explain the data representation choices that shape throughput and occupancy.',
-        ],
-      },
-      {
-        title: 'Profiling',
-        items: [
-          'Use profiling output to identify bottlenecks before optimization.',
-          'Add screenshots, tables, or benchmark summaries once stable course results are available.',
+          'Constructs a BVH for triangle meshes on the CPU and traverses it iteratively on the GPU with an explicit stack.',
+          'Supports diffuse, metallic, dielectric, emissive, alpha, textured, rough, and volume-tinted material behavior.',
         ],
       },
     ],
     challenges: [
-      'The page is intentionally marked in progress until project-specific kernels, profile captures, and performance numbers can be added.',
-      'GPU optimization work needs careful measurement so the portfolio does not overstate results.',
+      'Balancing physically based material sampling, probability density functions, and throughput updates across mixed material types.',
+      'Making complex glTF materials and large meshes performant enough for interactive iteration on the GPU.',
     ],
     results: [
-      'Prepared an internal page template for future GPU project writeups.',
-      'Created placeholders for algorithm notes, kernel structure, memory layout, profiling results, and screenshots.',
+      'Produced rendered scenes with glTF geometry, textured PBR materials, glass, rough metals, emissive lighting, HDR environments, and denoising.',
+      'Published the complete implementation and technical writeup in the linked repository.',
     ],
-    nextSteps: [
-      'Add each CUDA assignment or project as a subsection with kernel diagrams and profiling data.',
-      'Publish before/after optimization numbers only after they are measured and reproducible.',
-    ],
+    featured: true,
+  },
+  {
+    slug: 'gpu-final-project',
+    title: 'GPU Final Project',
+    status: 'In progress — repository coming soon',
+    summary: 'An in-progress GPU final project. Project details and the repository will be added when the work is ready to share.',
+    description: 'In progress — details and repository coming soon.',
+    disableDetails: true,
+    tags: ['GPU Programming', 'In Progress'],
+    visualLines: ['final project', 'in progress', 'repository coming soon'],
+    links: [],
+    overview: [],
+    highlights: [],
+    implementation: [],
+    challenges: [],
+    results: [],
     featured: false,
   },
   {

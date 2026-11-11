@@ -51,7 +51,7 @@ const ProjectCard = styled(motion.article)`
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
+  cursor: ${(props: { $interactive?: boolean }) => (props.$interactive ? 'pointer' : 'default')};
 
   &:hover {
     transform: translateY(-4px);
@@ -266,6 +266,8 @@ const ProjectCardView = ({ project }: { project: Project }) => {
   const hasMultipleImages = images.length > 1;
 
   const openDetails = () => {
+    if (project.disableDetails) return;
+
     if (project.detailLink) {
       window.location.href = project.detailLink.url;
       return;
@@ -296,6 +298,7 @@ const ProjectCardView = ({ project }: { project: Project }) => {
 
   return (
     <ProjectCard
+      $interactive={!project.disableDetails}
       role="article"
       tabIndex={0}
       onClick={handleCardClick}
@@ -342,10 +345,12 @@ const ProjectCardView = ({ project }: { project: Project }) => {
           ))}
         </TechStack>
         <ProjectLinks>
-          <DetailAction type="button" onClick={openDetails}>
-            {project.detailLink?.label ?? 'Details'}
-            <FaExternalLinkAlt aria-hidden="true" />
-          </DetailAction>
+          {!project.disableDetails && (
+            <DetailAction type="button" onClick={openDetails}>
+              {project.detailLink?.label ?? 'Details'}
+              <FaExternalLinkAlt aria-hidden="true" />
+            </DetailAction>
+          )}
           {project.links.map((link) => (
             <Action key={`${project.slug}-${link.label}`} href={link.url} target="_blank" rel="noopener noreferrer">
               {iconForLink(link.kind)}
